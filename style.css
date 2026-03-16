@@ -2,7 +2,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
     .main-card {
-        background: rgba(255, 255, 255, 0.9); /* 90% opacity white */
+        background: rgba(255, 255, 255, 0.5); /* 90% opacity white */
         padding: 40px;
         border-radius: 15px;
         margin: 50px auto;

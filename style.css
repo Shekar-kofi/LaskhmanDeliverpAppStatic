@@ -12,7 +12,7 @@
     }
     
     .footer-container {
-        background-color: rgba(248, 249, 250, 0.9); /* Slight transparency */
+        background-color: rgba(248, 249, 250, 0.7); /* Slight transparency */
         padding: 20px;
         text-align: center;
     }
@@ -23,7 +23,6 @@
         background-position: center;
         background-attachment: fixed;
         background-repeat: no-repeat;
-        /* Remove background-blend-mode and background-color from the body */
         font-family: 'Inter', sans-serif;
         margin: 0;
         min-height: 100vh;
@@ -41,7 +40,7 @@
     }
 
     h1 { text-align: center; color: #1a1a1a; margin-bottom: 30px; }
-    h2 { color: #007bff; margin-top: 0; font-size: 1.4em; }
+    h2 { text-align: center; color: #1a1a1a; margin-top: 0; font-size: 1.4em; }
     
     @media (max-width: 600px) {
         body { padding: 15px; }
@@ -85,4 +84,27 @@
     border: 1px solid #ccc;
     box-sizing: border-box; /* This is crucial for consistent alignment */
     margin-top: 5px;
+}
+
+
+/* Ensure the footer inherits the card look */
+.footer-container.main-card {
+    margin-top: 50px;
+    padding: 30px;
+    display: block; /* Ensures it acts like a card */
+}
+
+/* Use Flexbox to align contact/address side-by-side */
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.footer-heading {
+    color: #d63384; 
+    font-size: 1.1em; 
+    border-left: 4px solid #d63384; 
+    padding-left: 10px;
 }

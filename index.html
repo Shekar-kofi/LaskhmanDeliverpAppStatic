@@ -37,7 +37,8 @@
     <img src="logo.svg" alt="D3 Logistiks Logo" style="width: 200px; height: auto;">
   </div>
   <main class="main-card">
-    <h1>Delivery Jobs in Andhra Pradesh</h1>
+    <h1>SMARDOCE SOLUTIONS PVT LTD</h1>
+    <h2>Delivery Jobs in Andhra Pradesh</h1>
     <p style="text-align: center;">Find immediate delivery partner openings across all districts.</p>
 
     <div class="form-control-group">
@@ -78,13 +79,18 @@
 
 <div class="form-control-group">
       <label for="platform" style="margin-left: 20px;"><strong>Platform</strong></label>
-      <select id="platform" name="platform" onchange="updateWhatsAppLink()"
+      <select id="platform" name="platform" onchange="checkPlatform(this.value)">
         style="padding: 10px; border-radius: 5px; width: 200px;">
         <option value="">---Select---</option>
         <option value="bigbasket">🛒 Bigbasket</option>
         <option value="flipkart">📦 Flipkart</option>
         <option value="instamart">⚡ Swiggy Instamart</option>
+        <option value="other">Other</option>
       </select>
+
+      <input type="text" id="other-platform" name="other-platform" 
+         placeholder="Enter platform name" 
+         style="display:none; margin-top: 10px; width: 200px; padding: 10px;">
     </div>
 
 
@@ -99,27 +105,20 @@
 
 </body>
 
-<footer class="footer-container"
-  style="background-color: #f8f9fa; padding: 40px 20px; border-top: 2px solid #e9ecef; margin-top: 50px;">
-  <div style="display: flex; flex-wrap: wrap; justify-content: space-around; max-width: 800px; margin: 0 auto;">
-
-    <div style="flex: 1; min-width: 250px; margin-bottom: 20px;">
-      <h3 style="color: #d63384; font-size: 1.1em; border-left: 4px solid #d63384; padding-left: 10px;">CONTACT</h3>
+<footer class="footer-container main-card">
+  <div class="footer-content">
+    <div class="footer-column">
+      <h3 class="footer-heading">CONTACT</h3>
       <p>👨 Name: Lakshmana</p>
       <p>📞 Phone: +91 9000210321</p>
       <p>✉️ Email: d3.lakshmana@gmail.com</p>
     </div>
 
-    <div style="flex: 1; min-width: 250px;">
-      <h3 style="color: #d63384; font-size: 1.1em; border-left: 4px solid #d63384; padding-left: 10px;">ADDRESS</h3>
-      <p>Railway pool<br>
-        Near Railway Station<br>
-        Andhra Pradesh Viskakhaptnam 530012</p>
+    <div class="footer-column">
+      <h3 class="footer-heading">ADDRESS</h3>
+      <p>Railway pool<br>Near Railway Station<br>Andhra Pradesh Visakhapatnam 530012</p>
     </div>
   </div>
-
-  <p style="text-align: center; margin-top: 30px; font-size: 0.8em; color: #7f8c8d;">&copy; SMARDOCE SOLUTIONS PVT LTD.
-    All rights reserved.</p>
 
 </footer>
 

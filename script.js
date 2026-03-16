@@ -4,34 +4,44 @@ function checkDistrict(val) {
     updateWhatsAppLink();
 }
 
+function checkPlatform(val) {
+    const otherInput = document.getElementById('other-platform');
+    otherInput.style.display = (val === 'other') ? 'block' : 'none';
+    updateWhatsAppLink();
+}
+
 function updateWhatsAppLink() {
     const districtSelect = document.getElementById("district");
     const platformSelect = document.getElementById("platform");
-    const otherInput = document.getElementById('other-district');
+    const otherdistrict = document.getElementById('other-district');
+    const otherPlatform = document.getElementById('other-platform');
     const whatsappBtn = document.getElementById("whatsapp-btn");
 
     const districtValue = districtSelect.value;
     const platformValue = platformSelect.value;
-    const otherValue = otherInput.value;
+    const otherDistrictValue = otherdistrict.value;
+    const otherPlatformValue = otherPlatform.value;
 
     // VALIDATION: Check if empty
     const isInvalid = (districtValue === "" || 
-                      (districtValue === 'other' && otherValue.trim() === "") || 
-                      platformValue === "");
+                      (districtValue === 'other' && otherDistrictValue.trim() === "") || 
+                      platformValue === "" ||
+                      (platformValue === 'other' && otherPlatformValue.trim() === "")
+                      );
 
     if (isInvalid) {
         whatsappBtn.style.opacity = "0.5";
         whatsappBtn.style.pointerEvents = "none";
-        whatsappBtn.removeAttribute("href"); // Remove link so it can't be clicked
+        whatsappBtn.removeAttribute("href");
     } else {
         whatsappBtn.style.opacity = "1";
         whatsappBtn.style.pointerEvents = "auto";
         
         // Use custom text if 'other' is selected
-        const dText = (districtValue === 'other') ? otherValue : districtSelect.options[districtSelect.selectedIndex].text;
-        const pText = platformSelect.options[platformSelect.selectedIndex].text;
+        const dText = (districtValue === 'other') ? otherDistrictValue : districtSelect.options[districtSelect.selectedIndex].text;
+        const pText =  (platformValue === 'other') ? otherPlatformValue : platformSelect.options[platformSelect.selectedIndex].text;
 
-        const message = `Hi, I am interested in a delivery job in ${dText} for ${pText}.`;
+        const message = `Hi, I am interested in a delivery job in ${dText} for ${pText} platform.`;
         whatsappBtn.href = `https://wa.me/919000210321?text=${encodeURIComponent(message)}`;
     }
 }

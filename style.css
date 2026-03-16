@@ -79,3 +79,24 @@
         body { padding: 15px; }
         .job-card { padding: 20px; }
     }
+
+    .whatsapp-apply-btn {
+        display: inline-block;
+        background-color: #25D366; /* Official WhatsApp Green */
+        color: white;
+        padding: 15px 40px;
+        border-radius: 50px; /* This makes it pill-shaped */
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1em;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    
+    .whatsapp-apply-btn:hover {
+        background-color: #128C7E; /* Darker green on hover */
+        transform: scale(1.05); /* Slight pop effect */
+    }

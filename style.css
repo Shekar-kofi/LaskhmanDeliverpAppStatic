@@ -18,7 +18,7 @@
     }
 
     body {
-        background-image: url('../assets/backgroundD3.png');
+        background-image: url('assets/backgroundD3.png');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;

@@ -36,71 +36,78 @@
   <div class="header-logo">
     <img src="logo.svg" alt="D3 Logistiks Logo" style="width: 200px; height: auto;">
   </div>
-  <h1>Delivery Jobs in Andhra Pradesh</h1>
-  <p style="text-align: center;">Find immediate delivery partner openings across all districts.</p>
+  <main class="main-card">
+    <h1>Delivery Jobs in Andhra Pradesh</h1>
+    <p style="text-align: center;">Find immediate delivery partner openings across all districts.</p>
 
-  <div style="text-align: center; margin-bottom: 30px;">
-    <label for="district"><strong>Select District:</strong></label>
-    <select id="district" name="district" onchange="updateDistrict()"
-      style="padding: 10px; border-radius: 5px; width: 200px;">
-      <option value="">---Select---</option>
-      <option value="alluri_sitharama_raju">Alluri Sitharama Raju</option>
-      <option value="anakapalli">Anakapalli</option>
-      <option value="ananthapuramu">Ananthapuramu</option>
-      <option value="annamayya">Annamayya</option>
-      <option value="bapatla">Bapatla</option>
-      <option value="chittoor">Chittoor</option>
-      <option value="dr_br_ambedkar_konaseema">Dr. B.R. Ambedkar Konaseema</option>
-      <option value="east_godavari">East Godavari</option>
-      <option value="eluru">Eluru</option>
-      <option value="guntur">Guntur</option>
-      <option value="kakinada">Kakinada</option>
-      <option value="krishna">Krishna</option>
-      <option value="kurnool">Kurnool</option>
-      <option value="nandyal">Nandyal</option>
-      <option value="ntr">NTR</option>
-      <option value="prakasam">Prakasam</option>
-      <option value="spsr_nellore">SPSR Nellore</option>
-      <option value="srikakulam">Srikakulam</option>
-      <option value="tirupati">Tirupati</option>
-      <option value="visakhapatnam">Visakhapatnam</option>
-      <option value="vizianagaram">Vizianagaram</option>
-      <option value="west_godavari">West Godavari</option>
-      <option value="ysr_kadapa">YSR Kadapa</option>
-    </select>
-  </div>
+    <div class="form-control-group">
+      <label for="district"><strong>Select District</strong></label>
+      <select id="district" name="district" onchange="checkDistrict(this.value)">
+        <option value="">---Select---</option>
+        <option value="alluri_sitharama_raju">Alluri Sitharama Raju</option>
+        <option value="anakapalli">Anakapalli</option>
+        <option value="ananthapuramu">Ananthapuramu</option>
+        <option value="annamayya">Annamayya</option>
+        <option value="bapatla">Bapatla</option>
+        <option value="chittoor">Chittoor</option>
+        <option value="dr_br_ambedkar_konaseema">Dr. B.R. Ambedkar Konaseema</option>
+        <option value="east_godavari">East Godavari</option>
+        <option value="eluru">Eluru</option>
+        <option value="guntur">Guntur</option>
+        <option value="kakinada">Kakinada</option>
+        <option value="krishna">Krishna</option>
+        <option value="kurnool">Kurnool</option>
+        <option value="nandyal">Nandyal</option>
+        <option value="ntr">NTR</option>
+        <option value="prakasam">Prakasam</option>
+        <option value="spsr_nellore">SPSR Nellore</option>
+        <option value="srikakulam">Srikakulam</option>
+        <option value="tirupati">Tirupati</option>
+        <option value="visakhapatnam">Visakhapatnam</option>
+        <option value="vizianagaram">Vizianagaram</option>
+        <option value="west_godavari">West Godavari</option>
+        <option value="ysr_kadapa">YSR Kadapa</option>
+        <option value="other">Other</option>
+      </select>
 
-
-  <div style="text-align: center; margin-bottom: 30px;">
-    <label for="platform" style="margin-left: 20px;"><strong>Platform:</strong></label>
-    <select id="platform" name="platform" onchange="updateWhatsAppLink()"
-      style="padding: 10px; border-radius: 5px; width: 200px;">
-      <option value="">---Select---</option>
-      <option value="bigbasket">🛒 Bigbasket</option>
-      <option value="swiggy">🛵 Swiggy</option>
-      <option value="instamart">⚡ Swiggy Instamart</option>
-    </select>
-  </div>
- 
-
-  <div style="text-align: center; margin-top: 20px;">
-    <a href="#" id="whatsapp-btn" class="whatsapp-apply-btn" target="_blank">
-        Apply on WhatsApp
-    </a>
+      <input type="text" id="other-district" name="other-district" 
+      placeholder="Enter your district" 
+      style="display:none; margin-top: 10px;">
 </div>
+
+
+<div class="form-control-group">
+      <label for="platform" style="margin-left: 20px;"><strong>Platform</strong></label>
+      <select id="platform" name="platform" onchange="updateWhatsAppLink()"
+        style="padding: 10px; border-radius: 5px; width: 200px;">
+        <option value="">---Select---</option>
+        <option value="bigbasket">🛒 Bigbasket</option>
+        <option value="flipkart">📦 Flipkart</option>
+        <option value="instamart">⚡ Swiggy Instamart</option>
+      </select>
+    </div>
+
+
+    <div style="text-align: center; margin-top: 20px;">
+      <a href="#" id="whatsapp-btn" class="whatsapp-apply-btn" target="_blank">
+        Apply on WhatsApp
+      </a>
+    </div>
+  </main>
 
   <script src="script.js"></script>
 
 </body>
 
-<footer style="background-color: #f8f9fa; padding: 40px 20px; border-top: 2px solid #e9ecef; margin-top: 50px;">
+<footer class="footer-container"
+  style="background-color: #f8f9fa; padding: 40px 20px; border-top: 2px solid #e9ecef; margin-top: 50px;">
   <div style="display: flex; flex-wrap: wrap; justify-content: space-around; max-width: 800px; margin: 0 auto;">
 
     <div style="flex: 1; min-width: 250px; margin-bottom: 20px;">
       <h3 style="color: #d63384; font-size: 1.1em; border-left: 4px solid #d63384; padding-left: 10px;">CONTACT</h3>
-      <p>👨 Name: Lakshman</p>
+      <p>👨 Name: Lakshmana</p>
       <p>📞 Phone: +91 9000210321</p>
-      <p>✉️ Email: sales@d3logistiks.com</p>
+      <p>✉️ Email: d3.lakshmana@gmail.com</p>
     </div>
 
     <div style="flex: 1; min-width: 250px;">
@@ -110,6 +117,9 @@
         Andhra Pradesh Viskakhaptnam 530012</p>
     </div>
   </div>
+
+  <p style="text-align: center; margin-top: 30px; font-size: 0.8em; color: #7f8c8d;">&copy; SMARDOCE SOLUTIONS PVT LTD.
+    All rights reserved.</p>
 
 </footer>
 

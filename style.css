@@ -1,14 +1,32 @@
     /* Import modern font from Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
-    body { 
-        font-family: 'Inter', sans-serif; 
-        line-height: 1.6; 
-        max-width: 700px; 
-        margin: 0 auto; 
-        padding: 40px 20px; 
-        color: #333; 
-        background-color: #f8f9fa; 
+    .main-card {
+        background: rgba(255, 255, 255, 0.9); /* 90% opacity white */
+        padding: 40px;
+        border-radius: 15px;
+        margin: 50px auto;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    .footer-container {
+        background-color: rgba(248, 249, 250, 0.9); /* Slight transparency */
+        padding: 20px;
+        text-align: center;
+    }
+
+    body {
+        background-image: url('../assets/backgroundD3.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        /* Remove background-blend-mode and background-color from the body */
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        min-height: 100vh;
     }
 
     /* Professional header style */
@@ -22,59 +40,9 @@
         height: auto; 
     }
 
-    /* Enhanced job card with subtle depth */
-    .job-card { 
-        background: white; 
-        padding: 30px; 
-        border-radius: 16px; 
-        box-shadow: 0 8px 20px rgba(0,0,0,0.06); 
-        margin-bottom: 25px;
-        border: 1px solid #eef0f2;
-    }
-
     h1 { text-align: center; color: #1a1a1a; margin-bottom: 30px; }
     h2 { color: #007bff; margin-top: 0; font-size: 1.4em; }
     
-    .salary { 
-        color: #28a745; 
-        background: #e8f5e9; 
-        display: inline-block; 
-        padding: 4px 12px; 
-        border-radius: 6px; 
-        font-weight: 600; 
-        margin: 10px 0;
-    }
-    
-    /* Modern button styling */
-    .apply-btn { 
-        display: inline-block; 
-        background: #007bff; 
-        color: white; 
-        padding: 12px 24px; 
-        text-decoration: none; 
-        border-radius: 8px; 
-        font-weight: 600;
-        margin-top: 15px;
-        transition: background 0.2s, transform 0.2s;
-    }
-    .apply-btn:hover { background: #0056b3; transform: translateY(-2px); }
-
-    /* Keep your existing floating button */
-    .whatsapp-float {
-        position: fixed;
-        width: 55px;
-        height: 55px;
-        bottom: 20px; /* Adjusted position */
-        right: 20px;  /* Adjusted position */
-        background-color: #25d366;
-        border-radius: 50px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000; /* Ensure it stays on top */
-    }
-
     @media (max-width: 600px) {
         body { padding: 15px; }
         .job-card { padding: 20px; }
@@ -100,3 +68,21 @@
         background-color: #128C7E; /* Darker green on hover */
         transform: scale(1.05); /* Slight pop effect */
     }
+
+    /* Container for the district selection group */
+.form-control-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Keeps everything centered */
+    margin-bottom: 30px;
+}
+
+/* Force both the select and input to have the exact same width and padding */
+#district, #other-district, #platform {
+    width: 220px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* This is crucial for consistent alignment */
+    margin-top: 5px;
+}

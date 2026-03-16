@@ -1,73 +1,47 @@
-function updateJobTitle() {
-    var district = document.getElementById("district");
-    var platform = document.getElementById("platform");
-    
-    var districtText = district.options[district.selectedIndex].text;
-    var platformText = platform.options[platform.selectedIndex].text;
-    
-    // Update the WhatsApp link dynamically
-    var whatsappLink = document.getElementById("whatsapp-btn");
-    var message = "Hi, I am interested in a Delivery Partner job. Details: Platform: " + platformText + ", District: " + districtText;
-    var encodedMessage = encodeURIComponent(message);
-    
-    whatsappLink.href = "https://wa.me/918355837077?text=" + encodedMessage;
+function checkDistrict(val) {
+    const otherInput = document.getElementById('other-district');
+    otherInput.style.display = (val === 'other') ? 'block' : 'none';
+    updateWhatsAppLink();
 }
-
-
-// function updateWhatsAppLink() {
-//     const districtSelect = document.getElementById("district");
-//     const platformSelect = document.getElementById("platform");
-//     const whatsappBtn = document.getElementById("whatsapp-btn");
-
-//     const district = districtSelect.value;
-//     const platform = platformSelect.value;
-
-//     // Create the message
-//     const message = `Hi, I am interested in a Delivery Partner job. 
-//     Details: 
-//     - Platform: ${platform} 
-//     - District: ${district}`;
-
-//     // Encode the message for the URL
-//     const encodedMessage = encodeURIComponent(message);
-
-//     // Update the button's href
-//     whatsappBtn.href = `https://wa.me/918355837077?text=${encodedMessage}`;
-// }
-
 
 function updateWhatsAppLink() {
-    const district = document.getElementById("district").value;
-    const platform = document.getElementById("platform").value;
+    const districtSelect = document.getElementById("district");
+    const platformSelect = document.getElementById("platform");
+    const otherInput = document.getElementById('other-district');
     const whatsappBtn = document.getElementById("whatsapp-btn");
 
-    // Validation: Check if both selections have a value
-    if (district === "" || platform === "") {
-        // Option A: Disable the button if not filled
+    const districtValue = districtSelect.value;
+    const platformValue = platformSelect.value;
+    const otherValue = otherInput.value;
+
+    // VALIDATION: Check if empty
+    const isInvalid = (districtValue === "" || 
+                      (districtValue === 'other' && otherValue.trim() === "") || 
+                      platformValue === "");
+
+    if (isInvalid) {
         whatsappBtn.style.opacity = "0.5";
         whatsappBtn.style.pointerEvents = "none";
-        return;
+        whatsappBtn.removeAttribute("href"); // Remove link so it can't be clicked
     } else {
-        // Option B: Enable the button
         whatsappBtn.style.opacity = "1";
         whatsappBtn.style.pointerEvents = "auto";
+        
+        // Use custom text if 'other' is selected
+        const dText = (districtValue === 'other') ? otherValue : districtSelect.options[districtSelect.selectedIndex].text;
+        const pText = platformSelect.options[platformSelect.selectedIndex].text;
+
+        const message = `Hi, I am interested in a delivery job in ${dText} for ${pText}.`;
+        whatsappBtn.href = `https://wa.me/919000210321?text=${encodeURIComponent(message)}`;
     }
-
-    // Generate link only if both are selected
-    const districtText = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
-    const platformText = document.getElementById("platform").options[document.getElementById("platform").selectedIndex].text;
-
-    const message = `Hi, I am interested in a delivery job in ${districtText} for ${platformText}.`;
-    whatsappBtn.href = `https://wa.me/919000210321?text=${encodeURIComponent(message)}`;
 }
 
-// Ensure it runs on load to set the initial disabled state
-window.onload = updateWhatsAppLink;
-
-// Add event listeners to update the link whenever the user changes a dropdown
-document.getElementById("district").addEventListener("change", updateWhatsAppLink);
-document.getElementById("platform").addEventListener("change", updateWhatsAppLink);
-
-// Call it once on page load to set the initial link
-updateWhatsAppLink();
-
+// Ensure elements exist before adding listeners
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("district").addEventListener("change", updateWhatsAppLink);
+    document.getElementById("platform").addEventListener("change", updateWhatsAppLink);
+    document.getElementById('other-district').addEventListener('input', updateWhatsAppLink);
+    
+    // Initial call
+    updateWhatsAppLink();
+});

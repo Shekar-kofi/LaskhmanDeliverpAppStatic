@@ -128,30 +128,40 @@
     margin-top: 10px;
 }
 
-
-
-/* Hover effect */
-.card-content:hover {
-    background: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+/* Hide the actual radio button circles */
+.option-card input[type="radio"] {
+    display: none;
 }
 
-
-
-
+/* The card now acts as the primary interactive element */
 .card-content {
-    width: 80px; /* Fixed width for uniform cards */
-    height: 50px; /* Fixed height */
+    width: 120px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.7); /* Matching your glass effect */
     border: 2px solid transparent;
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
     padding: 10px;
+    backdrop-filter: blur(5px);
+}
+
+/* Hover effect for better UX */
+.card-content:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* When the HIDDEN radio is checked, style the card content */
+.option-card input[type="radio"]:checked + .card-content {
+    border-color: #d63384; /* Your pink/brand color */
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(214, 51, 132, 0.3);
+    transform: scale(1.05); /* Slight pop to show selection */
 }
 
 .card-content img {
@@ -166,9 +176,3 @@
     color: #555;
 }
 
-/* Selected State */
-.option-card input[type="radio"]:checked + .card-content {
-    border-color: #d63384;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(214, 51, 132, 0.2);
-}

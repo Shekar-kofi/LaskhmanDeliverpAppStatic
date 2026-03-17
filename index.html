@@ -40,103 +40,86 @@
   <main class="main-card">
     <!-- <h1>SMARDOCE SOLUTIONS PVT LTD</h1> -->
     <h2>Delivery Jobs in Andhra Pradesh</h1>
-    <p style="text-align: center;">Find immediate delivery partner openings across all districts.</p>
+      <p style="text-align: center;">Find immediate delivery partner openings across all districts.</p>
 
-    <div class="form-control-group">
-      <label for="district"><strong>Select District</strong></label>
-      <select id="district" name="district" onchange="checkDistrict(this.value)">
-        <option value="">---Select---</option>
-        <option value="alluri_sitharama_raju">Alluri Sitharama Raju</option>
-        <option value="anakapalli">Anakapalli</option>
-        <option value="ananthapuramu">Ananthapuramu</option>
-        <option value="annamayya">Annamayya</option>
-        <option value="bapatla">Bapatla</option>
-        <option value="chittoor">Chittoor</option>
-        <option value="dr_br_ambedkar_konaseema">Dr. B.R. Ambedkar Konaseema</option>
-        <option value="east_godavari">East Godavari</option>
-        <option value="eluru">Eluru</option>
-        <option value="guntur">Guntur</option>
-        <option value="kakinada">Kakinada</option>
-        <option value="krishna">Krishna</option>
-        <option value="kurnool">Kurnool</option>
-        <option value="nandyal">Nandyal</option>
-        <option value="ntr">NTR</option>
-        <option value="prakasam">Prakasam</option>
-        <option value="spsr_nellore">SPSR Nellore</option>
-        <option value="srikakulam">Srikakulam</option>
-        <option value="tirupati">Tirupati</option>
-        <option value="visakhapatnam">Visakhapatnam</option>
-        <option value="vizianagaram">Vizianagaram</option>
-        <option value="west_godavari">West Godavari</option>
-        <option value="ysr_kadapa">YSR Kadapa</option>
-        <option value="other">Other</option>
-      </select>
+      <div class="form-control-group">
+        <label for="district"><strong>Select District</strong></label>
+        <select id="district" name="district" onchange="checkDistrict(this.value)">
+          <option value="">---Select---</option>
+          <option value="alluri_sitharama_raju">Alluri Sitharama Raju</option>
+          <option value="anakapalli">Anakapalli</option>
+          <option value="ananthapuramu">Ananthapuramu</option>
+          <option value="annamayya">Annamayya</option>
+          <option value="bapatla">Bapatla</option>
+          <option value="chittoor">Chittoor</option>
+          <option value="dr_br_ambedkar_konaseema">Dr. B.R. Ambedkar Konaseema</option>
+          <option value="east_godavari">East Godavari</option>
+          <option value="eluru">Eluru</option>
+          <option value="guntur">Guntur</option>
+          <option value="kakinada">Kakinada</option>
+          <option value="krishna">Krishna</option>
+          <option value="kurnool">Kurnool</option>
+          <option value="nandyal">Nandyal</option>
+          <option value="ntr">NTR</option>
+          <option value="prakasam">Prakasam</option>
+          <option value="spsr_nellore">SPSR Nellore</option>
+          <option value="srikakulam">Srikakulam</option>
+          <option value="tirupati">Tirupati</option>
+          <option value="visakhapatnam">Visakhapatnam</option>
+          <option value="vizianagaram">Vizianagaram</option>
+          <option value="west_godavari">West Godavari</option>
+          <option value="ysr_kadapa">YSR Kadapa</option>
+          <option value="other">Other</option>
+        </select>
 
-      <input type="text" id="other-district" name="other-district" 
-      placeholder="Enter your district" 
-      style="display:none; margin-top: 10px;">
-</div>
-
-
-<div class="form-control-group">
-  <label><strong>Select Platform</strong></label>
-  
-  <div class="platform-options">
-    <label class="option-card">
-      <input type="radio" name="platform" value="bigbasket" onchange="checkPlatform(this.value)">
-      <div class="card-content">
-        <img src="assets/Bigbasket_logo.svg" alt="Bigbasket">
+        <input type="text" id="other-district" name="other-district" placeholder="Enter your district"
+          style="display:none; margin-top: 10px;">
       </div>
-    </label>
 
-    <label class="option-card">
-      <input type="radio" name="platform" value="flipkart" onchange="checkPlatform(this.value)">
-      <div class="card-content">
-        <img src="assets/Flipkart_logo.svg" alt="Flipkart">
+
+      <div class="form-control-group">
+        <label><strong>Select Platform</strong></label>
+
+        <div class="platform-options">
+          <label class="option-card">
+            <input type="radio" name="platform" value="bigbasket" onchange="checkPlatform(this.value)">
+            <div class="card-content">
+              <img src="assets/Bigbasket_logo.svg" alt="Bigbasket">
+            </div>
+          </label>
+
+          <label class="option-card">
+            <input type="radio" name="platform" value="flipkart" onchange="checkPlatform(this.value)">
+            <div class="card-content">
+              <img src="assets/Flipkart_logo.svg" alt="Flipkart">
+            </div>
+          </label>
+
+          <label class="option-card">
+            <input type="radio" name="platform" value="instamart" onchange="checkPlatform(this.value)">
+            <div class="card-content">
+              <img src="assets/Instamart_logo.png" alt="Instamart">
+            </div>
+          </label>
+
+          <label class="option-card">
+            <input type="radio" name="platform" value="other" onchange="checkPlatform(this.value)">
+            <div class="card-content">
+              <span>Other</span>
+            </div>
+          </label>
+        </div>
+
+        <input type="text" id="other-platform" name="other-platform" placeholder="Enter platform name"
+          style="display:none; margin-top: 15px; width: 220px; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
       </div>
-    </label>
 
-    <label class="option-card">
-      <input type="radio" name="platform" value="instamart" onchange="checkPlatform(this.value)">
-      <div class="card-content">
-        <img src="assets/Instamart_logo.png" alt="Instamart">
+
+      <div style="text-align: center; margin-top: 20px;">
+        <a href="#" id="whatsapp-btn" class="whatsapp-apply-btn" target="_blank">
+          Apply on WhatsApp
+        </a>
       </div>
-    </label>
-
-    <label class="option-card">
-      <input type="radio" name="platform" value="other" onchange="checkPlatform(this.value)">
-      <div class="card-content">
-        <span>Other</span>
-      </div>
-    </label>
-  </div>
-
-  <input type="text" id="other-platform" name="other-platform" placeholder="Enter platform name"
-    style="display:none; margin-top: 15px; width: 220px; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-</div>
-
-
-<!-- <div class="form-control-group">
-  <label for="platform" style="margin-left: 20px;"><strong>Platform</strong></label>
-  <select id="platform" name="platform" onchange="checkPlatform(this.value)">
-    style="padding: 10px; border-radius: 5px; width: 200px;">
-    <option value="">---Select---</option>
-    <option value="bigbasket">🛒 Bigbasket</option>
-    <option value="flipkart">📦 Flipkart</option>
-    <option value="instamart">⚡ Swiggy Instamart</option>
-    <option value="other">Other</option>
-  </select>
-
-  <input type="text" id="other-platform" name="other-platform" placeholder="Enter platform name"
-    style="display:none; margin-top: 10px; width: 200px; padding: 10px;">
-</div> -->
-
-
-    <div style="text-align: center; margin-top: 20px;">
-      <a href="#" id="whatsapp-btn" class="whatsapp-apply-btn" target="_blank">
-        Apply on WhatsApp
-      </a>
-    </div>
   </main>
 
   <script src="script.js"></script>

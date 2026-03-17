@@ -28,15 +28,25 @@
         min-height: 100vh;
     }
 
-    /* Professional header style */
-    .header-logo { 
-        text-align: center; 
-        margin: 20px 0; 
+    .header-logo {
+        display: flex;
+        flex-direction: column; /* Stacks items vertically */
+        align-items: center;    /* Centers items horizontally */
+        margin: 20px 0;         /* Adds space above and below the header */
     }
-    .header-logo img { 
-        width: 250px; /* Increased size */
-        max-width: 90%; /* Ensures it doesn't break on small screens */
-        height: auto; 
+    
+    .header-logo img {
+        width: 200px;
+        height: auto;
+    }
+    
+    .company-name {
+        margin-top: 10px;       /* Gap between logo and text */
+        font-size: 0.9em;       /* Adjust size to look professional */
+        font-weight: bold;
+        color: #333;            /* Matches your clean aesthetic */
+        letter-spacing: 1px;    /* Optional: adds a modern feel */
+        text-transform: uppercase;
     }
 
     h1 { text-align: center; color: #1a1a1a; margin-bottom: 30px; }
@@ -107,4 +117,58 @@
     font-size: 1.1em; 
     border-left: 4px solid #d63384; 
     padding-left: 10px;
+}
+
+
+.platform-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+
+
+/* Hover effect */
+.card-content:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+
+
+
+.card-content {
+    width: 80px; /* Fixed width for uniform cards */
+    height: 50px; /* Fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 10px;
+}
+
+.card-content img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Prevents logos from stretching */
+}
+
+/* Style for the 'Other' text to match logo height */
+.card-content span {
+    font-weight: bold;
+    color: #555;
+}
+
+/* Selected State */
+.option-card input[type="radio"]:checked + .card-content {
+    border-color: #d63384;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(214, 51, 132, 0.2);
 }

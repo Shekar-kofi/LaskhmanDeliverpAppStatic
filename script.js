@@ -66,10 +66,21 @@ function updateWhatsAppLink() {
 
 // Ensure elements exist before adding listeners
 window.addEventListener('DOMContentLoaded', () => {
+    // 1. Listen to District dropdown
     document.getElementById("district").addEventListener("change", updateWhatsAppLink);
-    document.getElementById("platform").addEventListener("change", updateWhatsAppLink);
-    document.getElementById('other-district').addEventListener('input', updateWhatsAppLink);
     
-    // Initial call
+    // 2. Listen to District "Other" text input
+    document.getElementById('other-district').addEventListener('input', updateWhatsAppLink);
+
+    // 3. Listen to Platform "Other" text input
+    document.getElementById('other-platform').addEventListener('input', updateWhatsAppLink);
+
+    // 4. NEW: Listen to ALL Radio Buttons for Platform
+    const platformRadios = document.querySelectorAll('input[name="platform"]');
+    platformRadios.forEach(radio => {
+        radio.addEventListener("change", updateWhatsAppLink);
+    });
+    
+    // Initial call to set button to disabled (0.5 opacity) on load
     updateWhatsAppLink();
 });

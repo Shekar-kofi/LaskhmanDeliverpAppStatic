@@ -10,15 +10,14 @@ function doPost(e) {
     const spreadsheet = SpreadsheetApp.openById(sheetId);
     
     // Determine which sheet to write to based on form type
-    let sheetName = 'Home'; // Default for delivery job applications
+    const homeSheetName = 'Home';
+    const advanceSheetName = 'AdvancePayment';
     const isAdvance = data.type === 'AdvancePayment' || data.formType === 'AdvancePayment';
-    if (isAdvance) {
-      sheetName = 'advancewd paymentr';
-    }
+    const sheetName = isAdvance ? advanceSheetName : homeSheetName;
     
     let sheet = spreadsheet.getSheetByName(sheetName);
     if (!sheet) {
-      // Create the sheet if it doesn't exist
+      // Create only the exact required sheet if it is missing
       sheet = spreadsheet.insertSheet(sheetName);
     }
 

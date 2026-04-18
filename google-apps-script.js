@@ -12,9 +12,22 @@ function doPost(e) {
     // Determine which sheet to write to based on form type
     const homeSheetName = 'Home';
     const advanceSheetName = 'AdvancePayment';
+    const referralsSheetName = 'Referrals';
+    const complaintsSheetName = 'Complaints';
+
     const isAdvance = data.type === 'AdvancePayment' || data.formType === 'AdvancePayment';
-    const sheetName = isAdvance ? advanceSheetName : homeSheetName;
-    
+    const isReferral = data.type === 'Referral' || data.formType === 'Referral' || data.type === 'Referal' || data.formType === 'Referal';
+    const isComplaint = data.type === 'Complaint' || data.formType === 'Complaint';
+
+    let sheetName = homeSheetName;
+    if (isAdvance) {
+      sheetName = advanceSheetName;
+    } else if (isReferral) {
+      sheetName = referralsSheetName;
+    } else if (isComplaint) {
+      sheetName = complaintsSheetName;
+    }
+
     let sheet = spreadsheet.getSheetByName(sheetName);
     if (!sheet) {
       // Create only the exact required sheet if it is missing
@@ -34,6 +47,23 @@ function doPost(e) {
         data.hubName || '',
         data.hubIncharge || '',
         data.location || ''
+      ];
+    } else if (isReferral) {
+      rowData = [
+        timestamp,
+        data.name,
+        data.phone,
+        data.hubName || '',
+        data.referralName || '',
+        data.location || ''
+      ];
+    } else if (isComplaint) {
+      rowData = [
+        timestamp,
+        data.name,
+        data.phone,
+        data.hubName || '',
+        data.complaint || ''
       ];
     } else {
       // Default delivery job application format
@@ -97,6 +127,39 @@ function setupHeaders() {
       'Hub Name',
       'Hub Incharge',
       'Location'
+    ]]);
+  }
+
+  // Setup Referrals Sheet
+  let referralsSheet = spreadsheet.getSheetByName('Referrals');
+  if (!referralsSheet) {
+    referralsSheet = spreadsheet.insertSheet('Referrals');
+  }
+
+  if (referralsSheet.getRange(1, 1).getValue() === '') {
+    referralsSheet.getRange(1, 1, 1, 6).setValues([[
+      'Timestamp',
+      'Name',
+      'Phone',
+      'Hub Name',
+      'Referral Name',
+      'Location'
+    ]]);
+  }
+
+  // Setup Complaints Sheet
+  let complaintsSheet = spreadsheet.getSheetByName('Complaints');
+  if (!complaintsSheet) {
+    complaintsSheet = spreadsheet.insertSheet('Complaints');
+  }
+
+  if (complaintsSheet.getRange(1, 1).getValue() === '') {
+    complaintsSheet.getRange(1, 1, 1, 5).setValues([[
+      'Timestamp',
+      'Name',
+      'Phone',
+      'Hub Name',
+      'Complaint'
     ]]);
   }
 }

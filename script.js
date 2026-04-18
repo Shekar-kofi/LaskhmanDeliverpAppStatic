@@ -227,6 +227,151 @@ async function handleAdvancePaymentSubmit(event) {
     locationInput.value = '';
 }
 
+// Function to handle Refer a Friend form submission
+async function handleReferFriendSubmit(event) {
+    event.preventDefault();
+
+    const nameInput = document.getElementById('rf-name');
+    const phoneInput = document.getElementById('rf-phone');
+    const hubNameInput = document.getElementById('rf-hub-name');
+    const referralNameInput = document.getElementById('rf-referral-name');
+    const locationInput = document.getElementById('rf-location');
+
+    if (!nameInput || !phoneInput || !hubNameInput || !referralNameInput || !locationInput) {
+        return;
+    }
+
+    const nameValue = nameInput.value.trim();
+    const phoneValue = phoneInput.value.trim();
+    const hubNameValue = hubNameInput.value.trim();
+    const referralNameValue = referralNameInput.value.trim();
+    const locationValue = locationInput.value.trim();
+
+    if (!nameValue || !phoneValue || !hubNameValue || !referralNameValue || !locationValue) {
+        alert('Please fill all fields');
+        return;
+    }
+
+    // Submit to Google Sheets
+    const formData = {
+        name: nameValue,
+        phone: phoneValue,
+        hubName: hubNameValue,
+        referralName: referralNameValue,
+        location: locationValue,
+        type: 'Referral',
+        formType: 'Referral',
+        timestamp: new Date().toISOString()
+    };
+
+    await submitToGoogleSheets(formData);
+    alert('Referral submitted successfully!');
+
+    nameInput.value = '';
+    phoneInput.value = '';
+    hubNameInput.value = '';
+    referralNameInput.value = '';
+    locationInput.value = '';
+    updateReferFriendButton();
+}
+
+// Function to handle Complaint form submission
+async function handleComplaintSubmit(event) {
+    event.preventDefault();
+
+    const nameInput = document.getElementById('cm-name');
+    const phoneInput = document.getElementById('cm-phone');
+    const hubNameInput = document.getElementById('cm-hub-name');
+    const complaintInput = document.getElementById('cm-complaint');
+
+    if (!nameInput || !phoneInput || !hubNameInput || !complaintInput) {
+        return;
+    }
+
+    const nameValue = nameInput.value.trim();
+    const phoneValue = phoneInput.value.trim();
+    const hubNameValue = hubNameInput.value.trim();
+    const complaintValue = complaintInput.value.trim();
+
+    if (!nameValue || !phoneValue || !hubNameValue || !complaintValue) {
+        alert('Please fill all fields');
+        return;
+    }
+
+    const formData = {
+        name: nameValue,
+        phone: phoneValue,
+        hubName: hubNameValue,
+        complaint: complaintValue,
+        type: 'Complaint',
+        formType: 'Complaint',
+        timestamp: new Date().toISOString()
+    };
+
+    await submitToGoogleSheets(formData);
+    alert('Complaint submitted successfully!');
+
+    nameInput.value = '';
+    phoneInput.value = '';
+    hubNameInput.value = '';
+    complaintInput.value = '';
+    updateComplaintButton();
+}
+
+// Function to validate Complaint form and enable/disable button
+function updateComplaintButton() {
+    const nameInput = document.getElementById('cm-name');
+    const phoneInput = document.getElementById('cm-phone');
+    const hubNameInput = document.getElementById('cm-hub-name');
+    const complaintInput = document.getElementById('cm-complaint');
+    const submitBtn = document.getElementById('cm-submit-btn');
+
+    if (!submitBtn) return;
+
+    const isValid = (nameInput && nameInput.value.trim() !== '') &&
+                    (phoneInput && phoneInput.value.trim() !== '') &&
+                    (hubNameInput && hubNameInput.value.trim() !== '') &&
+                    (complaintInput && complaintInput.value.trim() !== '');
+
+    if (isValid) {
+        submitBtn.style.opacity = '1';
+        submitBtn.style.pointerEvents = 'auto';
+        submitBtn.disabled = false;
+    } else {
+        submitBtn.style.opacity = '0.5';
+        submitBtn.style.pointerEvents = 'none';
+        submitBtn.disabled = true;
+    }
+}
+
+// Function to validate Refer a Friend form and enable/disable button
+function updateReferFriendButton() {
+    const nameInput = document.getElementById('rf-name');
+    const phoneInput = document.getElementById('rf-phone');
+    const hubNameInput = document.getElementById('rf-hub-name');
+    const referralNameInput = document.getElementById('rf-referral-name');
+    const locationInput = document.getElementById('rf-location');
+    const submitBtn = document.getElementById('rf-submit-btn');
+
+    if (!submitBtn) return;
+
+    const isValid = (nameInput && nameInput.value.trim() !== '') &&
+                    (phoneInput && phoneInput.value.trim() !== '') &&
+                    (hubNameInput && hubNameInput.value.trim() !== '') &&
+                    (referralNameInput && referralNameInput.value.trim() !== '') &&
+                    (locationInput && locationInput.value.trim() !== '');
+
+    if (isValid) {
+        submitBtn.style.opacity = '1';
+        submitBtn.style.pointerEvents = 'auto';
+        submitBtn.disabled = false;
+    } else {
+        submitBtn.style.opacity = '0.5';
+        submitBtn.style.pointerEvents = 'none';
+        submitBtn.disabled = true;
+    }
+}
+
 // Function to validate Advance Payment form and enable/disable button
 function updateAdvancePaymentButton() {
     const nameInput = document.getElementById('ap-name');
@@ -332,8 +477,40 @@ window.addEventListener('DOMContentLoaded', () => {
     if (apLocationInput) apLocationInput.addEventListener('input', updateAdvancePaymentButton);
     if (apSubmitBtn) apSubmitBtn.addEventListener('click', handleAdvancePaymentSubmit);
 
+    const rfNameInput = document.getElementById('rf-name');
+    const rfPhoneInput = document.getElementById('rf-phone');
+    const rfHubNameInput = document.getElementById('rf-hub-name');
+    const rfReferralNameInput = document.getElementById('rf-referral-name');
+    const rfLocationInput = document.getElementById('rf-location');
+    const rfSubmitBtn = document.getElementById('rf-submit-btn');
+    const referFriendForm = document.getElementById('refer-friend-form');
+
+    if (rfNameInput) rfNameInput.addEventListener('input', updateReferFriendButton);
+    if (rfPhoneInput) rfPhoneInput.addEventListener('input', updateReferFriendButton);
+    if (rfHubNameInput) rfHubNameInput.addEventListener('input', updateReferFriendButton);
+    if (rfReferralNameInput) rfReferralNameInput.addEventListener('input', updateReferFriendButton);
+    if (rfLocationInput) rfLocationInput.addEventListener('input', updateReferFriendButton);
+    if (rfSubmitBtn) rfSubmitBtn.addEventListener('click', handleReferFriendSubmit);
+    if (referFriendForm) referFriendForm.addEventListener('submit', handleReferFriendSubmit);
+
+    const cmNameInput = document.getElementById('cm-name');
+    const cmPhoneInput = document.getElementById('cm-phone');
+    const cmHubNameInput = document.getElementById('cm-hub-name');
+    const cmComplaintInput = document.getElementById('cm-complaint');
+    const cmSubmitBtn = document.getElementById('cm-submit-btn');
+    const complaintForm = document.getElementById('complaint-form');
+
+    if (cmNameInput) cmNameInput.addEventListener('input', updateComplaintButton);
+    if (cmPhoneInput) cmPhoneInput.addEventListener('input', updateComplaintButton);
+    if (cmHubNameInput) cmHubNameInput.addEventListener('input', updateComplaintButton);
+    if (cmComplaintInput) cmComplaintInput.addEventListener('input', updateComplaintButton);
+    if (cmSubmitBtn) cmSubmitBtn.addEventListener('click', handleComplaintSubmit);
+    if (complaintForm) complaintForm.addEventListener('submit', handleComplaintSubmit);
+
     // Initial validation for advance payment form
     updateAdvancePaymentButton();
+    updateReferFriendButton();
+    updateComplaintButton();
     
     // Initial call to set button to disabled (0.5 opacity) on load
     updateWhatsAppLink();

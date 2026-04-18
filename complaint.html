@@ -32,6 +32,25 @@
     <h2>Complaint</h2>
     <p>Submit complaints regarding service issues, payments, or app problems.</p>
     <p>We take every complaint seriously and will respond as quickly as possible.</p>
+    <form id="complaint-form" class="complaint-form">
+      <div class="form-control-group">
+        <label for="cm-name">Name</label>
+        <input id="cm-name" type="text" placeholder="Enter your name" />
+      </div>
+      <div class="form-control-group">
+        <label for="cm-phone">Phone Number</label>
+        <input id="cm-phone" type="tel" placeholder="Enter phone number" />
+      </div>
+      <div class="form-control-group">
+        <label for="cm-hub-name">Hub Name</label>
+        <input id="cm-hub-name" type="text" placeholder="Enter hub name" />
+      </div>
+      <div class="form-control-group">
+        <label for="cm-complaint">Complaint</label>
+        <textarea id="cm-complaint" rows="4" placeholder="Describe your complaint"></textarea>
+      </div>
+      <button type="submit" class="whatsapp-apply-btn" id="cm-submit-btn" disabled>Submit Complaint</button>
+    </form>
     <p><a class="page-link" href="index.html">Back to Home</a></p>
   </main>
 

@@ -250,7 +250,7 @@
 }
 
 /* Force both the select and input to have the exact same width and padding */
-#district, #other-district, #platform, #name, #phone, #ap-name, #ap-phone, #ap-hub-name, #ap-hub-incharge, #ap-location {
+#district, #other-district, #platform, #name, #phone, #ap-name, #ap-phone, #ap-hub-name, #ap-hub-incharge, #ap-location, #rf-name, #rf-phone, #rf-hub-name, #rf-referral-name, #rf-location, #cm-name, #cm-phone, #cm-hub-name, #cm-complaint {
     width: 220px;
     padding: 10px;
     border-radius: 5px;

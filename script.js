@@ -10,8 +10,21 @@ function checkPlatform(val) {
     updateWhatsAppLink();
 }
 
+// Helper function to show loading overlay
+function showLoading() {
+    const overlay = document.getElementById('loading-overlay');
+    if (overlay) {
+        overlay.classList.add('show');
+    }
+}
 
-
+// Helper function to hide loading overlay
+function hideLoading() {
+    const overlay = document.getElementById('loading-overlay');
+    if (overlay) {
+        overlay.classList.remove('show');
+    }
+}
 
 function updateWhatsAppLink() {
     const districtSelect = document.getElementById("district");
@@ -106,216 +119,248 @@ async function submitToGoogleSheets(formData) {
 // Function to handle WhatsApp button click
 async function handleWhatsAppClick(event) {
     event.preventDefault();
+    showLoading();
 
-    const districtSelect = document.getElementById("district");
-    const otherdistrict = document.getElementById('other-district');
-    const otherPlatform = document.getElementById('other-platform');
-    const nameInput = document.getElementById('name');
-    const phoneInput = document.getElementById('phone');
+    try {
+        const districtSelect = document.getElementById("district");
+        const otherdistrict = document.getElementById('other-district');
+        const otherPlatform = document.getElementById('other-platform');
+        const nameInput = document.getElementById('name');
+        const phoneInput = document.getElementById('phone');
 
-    // Get form data
-    const districtValue = districtSelect ? districtSelect.value : "";
-    const otherDistrictValue = otherdistrict ? otherdistrict.value : "";
-    const selectedPlatformRadio = document.querySelector('input[name="platform"]:checked');
-    const platformValue = selectedPlatformRadio ? selectedPlatformRadio.value : "";
-    const otherPlatformValue = otherPlatform ? otherPlatform.value : "";
-    const nameValue = nameInput ? nameInput.value.trim() : "";
-    const phoneValue = phoneInput ? phoneInput.value.trim() : "";
+        // Get form data
+        const districtValue = districtSelect ? districtSelect.value : "";
+        const otherDistrictValue = otherdistrict ? otherdistrict.value : "";
+        const selectedPlatformRadio = document.querySelector('input[name="platform"]:checked');
+        const platformValue = selectedPlatformRadio ? selectedPlatformRadio.value : "";
+        const otherPlatformValue = otherPlatform ? otherPlatform.value : "";
+        const nameValue = nameInput ? nameInput.value.trim() : "";
+        const phoneValue = phoneInput ? phoneInput.value.trim() : "";
 
-    // Get District Text
-    const dText = (districtValue === 'other') ? otherDistrictValue : districtSelect.options[districtSelect.selectedIndex].text;
+        // Get District Text
+        const dText = (districtValue === 'other') ? otherDistrictValue : districtSelect.options[districtSelect.selectedIndex].text;
 
-    // Get Platform Text
-    let pText = "";
-    if (platformValue === "other") {
-      pText = otherPlatformValue;
-    } else if (selectedPlatformRadio) {
-      const img = selectedPlatformRadio.parentElement.querySelector("img");
-      pText = img ? img.alt : selectedPlatformRadio.parentElement.innerText.trim();
+        // Get Platform Text
+        let pText = "";
+        if (platformValue === "other") {
+          pText = otherPlatformValue;
+        } else if (selectedPlatformRadio) {
+          const img = selectedPlatformRadio.parentElement.querySelector("img");
+          pText = img ? img.alt : selectedPlatformRadio.parentElement.innerText.trim();
+        }
+
+        const message = `Hi, I am ${nameValue} (${phoneValue}). I am interested in a delivery job in ${dText} for ${pText} platform.`;
+
+        // Prepare data for Google Sheets
+        const formData = {
+            name: nameValue,
+            phone: phoneValue,
+            district: dText,
+            platform: pText,
+            timestamp: new Date().toISOString()
+        };
+
+        // Submit to Google Sheets first
+        await submitToGoogleSheets(formData);
+
+        // Then open WhatsApp
+        const whatsappURL = `https://wa.me/919000210321?text=${encodeURIComponent(message)}`;
+        window.open(whatsappURL, '_blank');
+
+        // Clear all form fields
+        if (nameInput) nameInput.value = '';
+        if (phoneInput) phoneInput.value = '';
+        if (districtSelect) districtSelect.value = '';
+        if (otherdistrict) otherdistrict.value = '';
+        if (otherPlatform) otherPlatform.value = '';
+        
+        // Clear platform selection
+        document.querySelectorAll('input[name="platform"]').forEach(radio => {
+            radio.checked = false;
+        });
+
+        // Hide "Other" inputs
+        if (otherdistrict) otherdistrict.style.display = 'none';
+        if (otherPlatform) otherPlatform.style.display = 'none';
+
+        // Reset button state
+        updateWhatsAppLink();
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    } finally {
+        hideLoading();
     }
-
-    const message = `Hi, I am ${nameValue} (${phoneValue}). I am interested in a delivery job in ${dText} for ${pText} platform.`;
-
-    // Prepare data for Google Sheets
-    const formData = {
-        name: nameValue,
-        phone: phoneValue,
-        district: dText,
-        platform: pText,
-        timestamp: new Date().toISOString()
-    };
-
-    // Submit to Google Sheets first
-    await submitToGoogleSheets(formData);
-
-    // Then open WhatsApp
-    const whatsappURL = `https://wa.me/919000210321?text=${encodeURIComponent(message)}`;
-    window.open(whatsappURL, '_blank');
-
-    // Clear all form fields
-    if (nameInput) nameInput.value = '';
-    if (phoneInput) phoneInput.value = '';
-    if (districtSelect) districtSelect.value = '';
-    if (otherdistrict) otherdistrict.value = '';
-    if (otherPlatform) otherPlatform.value = '';
-    
-    // Clear platform selection
-    document.querySelectorAll('input[name="platform"]').forEach(radio => {
-        radio.checked = false;
-    });
-
-    // Hide "Other" inputs
-    if (otherdistrict) otherdistrict.style.display = 'none';
-    if (otherPlatform) otherPlatform.style.display = 'none';
-
-    // Reset button state
-    updateWhatsAppLink();
 }
 
 
 // Function to handle Advance Payment form submission
 async function handleAdvancePaymentSubmit(event) {
     event.preventDefault();
+    showLoading();
 
-    const nameInput = document.getElementById('ap-name');
-    const phoneInput = document.getElementById('ap-phone');
-    const hubNameInput = document.getElementById('ap-hub-name');
-    const hubInchargeInput = document.getElementById('ap-hub-incharge');
-    const locationInput = document.getElementById('ap-location');
-    const submitBtn = document.getElementById('ap-submit-btn');
+    try {
+        const nameInput = document.getElementById('ap-name');
+        const phoneInput = document.getElementById('ap-phone');
+        const hubNameInput = document.getElementById('ap-hub-name');
+        const hubInchargeInput = document.getElementById('ap-hub-incharge');
+        const locationInput = document.getElementById('ap-location');
+        const submitBtn = document.getElementById('ap-submit-btn');
 
-    if (!nameInput || !phoneInput || !hubNameInput || !hubInchargeInput || !locationInput) {
-        return;
+        if (!nameInput || !phoneInput || !hubNameInput || !hubInchargeInput || !locationInput) {
+            return;
+        }
+
+        // Get form values
+        const nameValue = nameInput.value.trim();
+        const phoneValue = phoneInput.value.trim();
+        const hubNameValue = hubNameInput.value.trim();
+        const hubInchargeValue = hubInchargeInput.value.trim();
+        const locationValue = locationInput.value.trim();
+
+        // Validate all fields are filled
+        if (!nameValue || !phoneValue || !hubNameValue || !hubInchargeValue || !locationValue) {
+            alert('Please fill all fields');
+            return;
+        }
+
+        // Prepare data for Google Sheets
+        const formData = {
+            name: nameValue,
+            phone: phoneValue,
+            hubName: hubNameValue,
+            hubIncharge: hubInchargeValue,
+            location: locationValue,
+            type: 'AdvancePayment',
+            formType: 'AdvancePayment',
+            timestamp: new Date().toISOString()
+        };
+
+        // Submit to Google Sheets
+        await submitToGoogleSheets(formData);
+
+        // Show success message
+        alert('Your advance payment request has been submitted successfully!');
+
+        // Clear form fields
+        nameInput.value = '';
+        phoneInput.value = '';
+        hubNameInput.value = '';
+        hubInchargeInput.value = '';
+        locationInput.value = '';
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    } finally {
+        hideLoading();
     }
-
-    // Get form values
-    const nameValue = nameInput.value.trim();
-    const phoneValue = phoneInput.value.trim();
-    const hubNameValue = hubNameInput.value.trim();
-    const hubInchargeValue = hubInchargeInput.value.trim();
-    const locationValue = locationInput.value.trim();
-
-    // Validate all fields are filled
-    if (!nameValue || !phoneValue || !hubNameValue || !hubInchargeValue || !locationValue) {
-        alert('Please fill all fields');
-        return;
-    }
-
-    // Prepare data for Google Sheets
-    const formData = {
-        name: nameValue,
-        phone: phoneValue,
-        hubName: hubNameValue,
-        hubIncharge: hubInchargeValue,
-        location: locationValue,
-        type: 'AdvancePayment',
-        formType: 'AdvancePayment',
-        timestamp: new Date().toISOString()
-    };
-
-    // Submit to Google Sheets
-    await submitToGoogleSheets(formData);
-
-    // Show success message
-    alert('Your advance payment request has been submitted successfully!');
-
-    // Clear form fields
-    nameInput.value = '';
-    phoneInput.value = '';
-    hubNameInput.value = '';
-    hubInchargeInput.value = '';
-    locationInput.value = '';
 }
 
 // Function to handle Refer a Friend form submission
 async function handleReferFriendSubmit(event) {
     event.preventDefault();
+    showLoading();
 
-    const nameInput = document.getElementById('rf-name');
-    const phoneInput = document.getElementById('rf-phone');
-    const hubNameInput = document.getElementById('rf-hub-name');
-    const referralNameInput = document.getElementById('rf-referral-name');
-    const locationInput = document.getElementById('rf-location');
+    try {
+        const nameInput = document.getElementById('rf-name');
+        const phoneInput = document.getElementById('rf-phone');
+        const hubNameInput = document.getElementById('rf-hub-name');
+        const referralNameInput = document.getElementById('rf-referral-name');
+        const locationInput = document.getElementById('rf-location');
 
-    if (!nameInput || !phoneInput || !hubNameInput || !referralNameInput || !locationInput) {
-        return;
+        if (!nameInput || !phoneInput || !hubNameInput || !referralNameInput || !locationInput) {
+            return;
+        }
+
+        const nameValue = nameInput.value.trim();
+        const phoneValue = phoneInput.value.trim();
+        const hubNameValue = hubNameInput.value.trim();
+        const referralNameValue = referralNameInput.value.trim();
+        const locationValue = locationInput.value.trim();
+
+        if (!nameValue || !phoneValue || !hubNameValue || !referralNameValue || !locationValue) {
+            alert('Please fill all fields');
+            return;
+        }
+
+        // Submit to Google Sheets
+        const formData = {
+            name: nameValue,
+            phone: phoneValue,
+            hubName: hubNameValue,
+            referralName: referralNameValue,
+            location: locationValue,
+            type: 'Referral',
+            formType: 'Referral',
+            timestamp: new Date().toISOString()
+        };
+
+        await submitToGoogleSheets(formData);
+        alert('Referral submitted successfully!');
+
+        nameInput.value = '';
+        phoneInput.value = '';
+        hubNameInput.value = '';
+        referralNameInput.value = '';
+        locationInput.value = '';
+        updateReferFriendButton();
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    } finally {
+        hideLoading();
     }
-
-    const nameValue = nameInput.value.trim();
-    const phoneValue = phoneInput.value.trim();
-    const hubNameValue = hubNameInput.value.trim();
-    const referralNameValue = referralNameInput.value.trim();
-    const locationValue = locationInput.value.trim();
-
-    if (!nameValue || !phoneValue || !hubNameValue || !referralNameValue || !locationValue) {
-        alert('Please fill all fields');
-        return;
-    }
-
-    // Submit to Google Sheets
-    const formData = {
-        name: nameValue,
-        phone: phoneValue,
-        hubName: hubNameValue,
-        referralName: referralNameValue,
-        location: locationValue,
-        type: 'Referral',
-        formType: 'Referral',
-        timestamp: new Date().toISOString()
-    };
-
-    await submitToGoogleSheets(formData);
-    alert('Referral submitted successfully!');
-
-    nameInput.value = '';
-    phoneInput.value = '';
-    hubNameInput.value = '';
-    referralNameInput.value = '';
-    locationInput.value = '';
-    updateReferFriendButton();
 }
 
 // Function to handle Complaint form submission
 async function handleComplaintSubmit(event) {
     event.preventDefault();
+    showLoading();
 
-    const nameInput = document.getElementById('cm-name');
-    const phoneInput = document.getElementById('cm-phone');
-    const hubNameInput = document.getElementById('cm-hub-name');
-    const complaintInput = document.getElementById('cm-complaint');
+    try {
+        const nameInput = document.getElementById('cm-name');
+        const phoneInput = document.getElementById('cm-phone');
+        const hubNameInput = document.getElementById('cm-hub-name');
+        const complaintInput = document.getElementById('cm-complaint');
 
-    if (!nameInput || !phoneInput || !hubNameInput || !complaintInput) {
-        return;
+        if (!nameInput || !phoneInput || !hubNameInput || !complaintInput) {
+            return;
+        }
+
+        const nameValue = nameInput.value.trim();
+        const phoneValue = phoneInput.value.trim();
+        const hubNameValue = hubNameInput.value.trim();
+        const complaintValue = complaintInput.value.trim();
+
+        if (!nameValue || !phoneValue || !hubNameValue || !complaintValue) {
+            alert('Please fill all fields');
+            return;
+        }
+
+        const formData = {
+            name: nameValue,
+            phone: phoneValue,
+            hubName: hubNameValue,
+            complaint: complaintValue,
+            type: 'Complaint',
+            formType: 'Complaint',
+            timestamp: new Date().toISOString()
+        };
+
+        await submitToGoogleSheets(formData);
+        alert('Complaint submitted successfully!');
+
+        nameInput.value = '';
+        phoneInput.value = '';
+        hubNameInput.value = '';
+        complaintInput.value = '';
+        updateComplaintButton();
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    } finally {
+        hideLoading();
     }
-
-    const nameValue = nameInput.value.trim();
-    const phoneValue = phoneInput.value.trim();
-    const hubNameValue = hubNameInput.value.trim();
-    const complaintValue = complaintInput.value.trim();
-
-    if (!nameValue || !phoneValue || !hubNameValue || !complaintValue) {
-        alert('Please fill all fields');
-        return;
-    }
-
-    const formData = {
-        name: nameValue,
-        phone: phoneValue,
-        hubName: hubNameValue,
-        complaint: complaintValue,
-        type: 'Complaint',
-        formType: 'Complaint',
-        timestamp: new Date().toISOString()
-    };
-
-    await submitToGoogleSheets(formData);
-    alert('Complaint submitted successfully!');
-
-    nameInput.value = '';
-    phoneInput.value = '';
-    hubNameInput.value = '';
-    complaintInput.value = '';
-    updateComplaintButton();
 }
 
 // Function to validate Complaint form and enable/disable button

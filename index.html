@@ -38,9 +38,32 @@
     <p class="company-name">SMARDOCE SOLUTIONS PVT LTD</p>
   </div>
   <main class="main-card">
+    <nav class="page-menu">
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="menu-dropdown" id="menu-dropdown" aria-hidden="true">
+        <a href="referafriend.html">Refer a Friend</a>
+        <a href="help.html">Help</a>
+        <a href="advance-payment.html">Advance Payment</a>
+        <a href="complaint.html">Complaint</a>
+      </div>
+    </nav>
     <!-- <h1>SMARDOCE SOLUTIONS PVT LTD</h1> -->
     <h2>Delivery Jobs in Andhra Pradesh</h1>
       <p style="text-align: center;">Find immediate delivery partner openings across all districts.</p>
+
+      <div class="form-control-group">
+        <label for="name"><strong>Full Name</strong></label>
+        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+      </div>
+
+      <div class="form-control-group">
+        <label for="phone"><strong>Phone Number</strong></label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+      </div>
 
       <div class="form-control-group">
         <label for="district"><strong>Select District</strong></label>
@@ -114,11 +137,10 @@
           style="display:none; margin-top: 15px; width: 220px; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
       </div>
 
-
       <div style="text-align: center; margin-top: 20px;">
-        <a href="#" id="whatsapp-btn" class="whatsapp-apply-btn" target="_blank">
+        <button id="whatsapp-btn" class="whatsapp-apply-btn" type="button">
           Apply on WhatsApp
-        </a>
+        </button>
       </div>
   </main>
 

@@ -7,7 +7,12 @@ function doPost(e) {
 
     // Open the Google Sheet
     const sheetId = '1VZelT1XXGzywNDEBE6hEEaNo-QnVto4Orn1ruK551ak';
-    const sheet = SpreadsheetApp.openById(sheetId).getActiveSheet();
+    const sheetName = 'Sheet2';
+    const spreadsheet = SpreadsheetApp.openById(sheetId);
+    let sheet = spreadsheet.getSheetByName(sheetName);
+    if (!sheet) {
+      sheet = spreadsheet.getActiveSheet();
+    }
 
     // Get current timestamp
     const timestamp = new Date();
@@ -18,8 +23,7 @@ function doPost(e) {
       data.name,
       data.phone,
       data.district,
-      data.platform,
-      data.message
+      data.platform
     ];
 
     // Append to sheet
@@ -41,17 +45,21 @@ function doPost(e) {
 // Test function to set up headers (run this once)
 function setupHeaders() {
   const sheetId = '1VZelT1XXGzywNDEBE6hEEaNo-QnVto4Orn1ruK551ak';
-  const sheet = SpreadsheetApp.openById(sheetId).getActiveSheet();
+  const sheetName = 'Sheet2';
+  const spreadsheet = SpreadsheetApp.openById(sheetId);
+  let sheet = spreadsheet.getSheetByName(sheetName);
+  if (!sheet) {
+    sheet = spreadsheet.getActiveSheet();
+  }
 
   // Set headers if not already set
   if (sheet.getRange(1, 1).getValue() === '') {
-    sheet.getRange(1, 1, 1, 6).setValues([[
+    sheet.getRange(1, 1, 1, 5).setValues([[
       'Timestamp',
       'Name',
       'Phone',
       'District',
-      'Platform',
-      'Message'
+      'Platform'
     ]]);
   }
 }

@@ -79,7 +79,7 @@ function updateWhatsAppLink() {
 async function submitToGoogleSheets(formData) {
     // IMPORTANT: Replace this URL with your deployed Google Apps Script web app URL
     // Follow the setup instructions in README.md
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbytB5IjWWQk3r_LHCYhn0F4hOiOVqAp-FXF8kguhfNNaUL1iYHoWOsmA_FZjC5HtT8Y/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzq3R7X_UldwpEruIGvWnVG30qHi_2_foCctfMK6UOA-14DxcYJ3Web57nlUvO7ziWU/exec';
 
     try {
         const response = await fetch(scriptURL, {
@@ -142,7 +142,6 @@ async function handleWhatsAppClick(event) {
         phone: phoneValue,
         district: dText,
         platform: pText,
-        message: message,
         timestamp: new Date().toISOString()
     };
 
@@ -152,6 +151,25 @@ async function handleWhatsAppClick(event) {
     // Then open WhatsApp
     const whatsappURL = `https://wa.me/919000210321?text=${encodeURIComponent(message)}`;
     window.open(whatsappURL, '_blank');
+
+    // Clear all form fields
+    if (nameInput) nameInput.value = '';
+    if (phoneInput) phoneInput.value = '';
+    if (districtSelect) districtSelect.value = '';
+    if (otherdistrict) otherdistrict.value = '';
+    if (otherPlatform) otherPlatform.value = '';
+    
+    // Clear platform selection
+    document.querySelectorAll('input[name="platform"]').forEach(radio => {
+        radio.checked = false;
+    });
+
+    // Hide "Other" inputs
+    if (otherdistrict) otherdistrict.style.display = 'none';
+    if (otherPlatform) otherPlatform.style.display = 'none';
+
+    // Reset button state
+    updateWhatsAppLink();
 }
 
 

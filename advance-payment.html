@@ -15,25 +15,55 @@
     <p class="company-name">SMARDOCE SOLUTIONS PVT LTD</p>
   </div>
 
-  <nav class="page-menu">
-    <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-label="Open menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-    <div class="menu-dropdown" id="menu-dropdown" aria-hidden="true">
-      <a href="referafriend.html">Refer a Friend</a>
-      <a href="help.html">Help</a>
-      <a href="advance-payment.html">Advance Payment</a>
-      <a href="complaint.html">Complaint</a>
-    </div>
-  </nav>
-
   <main class="main-card">
-    <h2>Advance Payment</h2>
-    <p>Learn how to request advance payment for your delivery assignments.</p>
-    <p>Advance payments can be arranged through our support team once you are accepted as a delivery partner.</p>
-    <p><a class="page-link" href="index.html">Back to Home</a></p>
+    <nav class="page-menu">
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="menu-dropdown" id="menu-dropdown" aria-hidden="true">
+        <a href="referafriend.html">Refer a Friend</a>
+        <a href="help.html">Help</a>
+        <a href="advance-payment.html">Advance Payment</a>
+        <a href="complaint.html">Complaint</a>
+      </div>
+    </nav>
+    <h2>Advance Payment Request</h2>
+    <p style="text-align: center;">Submit your details to request advance payment.</p>
+
+    <div class="form-control-group">
+      <label for="ap-name"><strong>Full Name</strong></label>
+      <input type="text" id="ap-name" name="ap-name" placeholder="Enter your full name" required>
+    </div>
+
+    <div class="form-control-group">
+      <label for="ap-phone"><strong>Phone Number</strong></label>
+      <input type="tel" id="ap-phone" name="ap-phone" placeholder="Enter your phone number" required>
+    </div>
+
+    <div class="form-control-group">
+      <label for="ap-hub-name"><strong>Hub Name</strong></label>
+      <input type="text" id="ap-hub-name" name="ap-hub-name" placeholder="Enter hub name" required>
+    </div>
+
+    <div class="form-control-group">
+      <label for="ap-hub-incharge"><strong>Hub Incharge Name</strong></label>
+      <input type="text" id="ap-hub-incharge" name="ap-hub-incharge" placeholder="Enter hub incharge name" required>
+    </div>
+
+    <div class="form-control-group">
+      <label for="ap-location"><strong>Location</strong></label>
+      <input type="text" id="ap-location" name="ap-location" placeholder="Enter location" required>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+      <button id="ap-submit-btn" class="whatsapp-apply-btn" type="button">
+        Submit Request
+      </button>
+    </div>
+
+    <p style="text-align: center; margin-top: 20px;"><a class="page-link" href="index.html">Back to Home</a></p>
   </main>
 
   <script src="script.js"></script>

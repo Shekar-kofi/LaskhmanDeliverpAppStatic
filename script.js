@@ -79,7 +79,7 @@ function updateWhatsAppLink() {
 async function submitToGoogleSheets(formData) {
     // IMPORTANT: Replace this URL with your deployed Google Apps Script web app URL
     // Follow the setup instructions in README.md
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzq3R7X_UldwpEruIGvWnVG30qHi_2_foCctfMK6UOA-14DxcYJ3Web57nlUvO7ziWU/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxt3noTtXlxG2KW2vKJWIeV3eHygPwapo_qgHddlZ3XMWfp4sRtlSMuFUJBo0hD1D7K/exec';
 
     try {
         const response = await fetch(scriptURL, {
@@ -173,6 +173,87 @@ async function handleWhatsAppClick(event) {
 }
 
 
+// Function to handle Advance Payment form submission
+async function handleAdvancePaymentSubmit(event) {
+    event.preventDefault();
+
+    const nameInput = document.getElementById('ap-name');
+    const phoneInput = document.getElementById('ap-phone');
+    const hubNameInput = document.getElementById('ap-hub-name');
+    const hubInchargeInput = document.getElementById('ap-hub-incharge');
+    const locationInput = document.getElementById('ap-location');
+    const submitBtn = document.getElementById('ap-submit-btn');
+
+    if (!nameInput || !phoneInput || !hubNameInput || !hubInchargeInput || !locationInput) {
+        return;
+    }
+
+    // Get form values
+    const nameValue = nameInput.value.trim();
+    const phoneValue = phoneInput.value.trim();
+    const hubNameValue = hubNameInput.value.trim();
+    const hubInchargeValue = hubInchargeInput.value.trim();
+    const locationValue = locationInput.value.trim();
+
+    // Validate all fields are filled
+    if (!nameValue || !phoneValue || !hubNameValue || !hubInchargeValue || !locationValue) {
+        alert('Please fill all fields');
+        return;
+    }
+
+    // Prepare data for Google Sheets
+    const formData = {
+        name: nameValue,
+        phone: phoneValue,
+        hubName: hubNameValue,
+        hubIncharge: hubInchargeValue,
+        location: locationValue,
+        type: 'AdvancePayment',
+        formType: 'AdvancePayment',
+        timestamp: new Date().toISOString()
+    };
+
+    // Submit to Google Sheets
+    await submitToGoogleSheets(formData);
+
+    // Show success message
+    alert('Your advance payment request has been submitted successfully!');
+
+    // Clear form fields
+    nameInput.value = '';
+    phoneInput.value = '';
+    hubNameInput.value = '';
+    hubInchargeInput.value = '';
+    locationInput.value = '';
+}
+
+// Function to validate Advance Payment form and enable/disable button
+function updateAdvancePaymentButton() {
+    const nameInput = document.getElementById('ap-name');
+    const phoneInput = document.getElementById('ap-phone');
+    const hubNameInput = document.getElementById('ap-hub-name');
+    const hubInchargeInput = document.getElementById('ap-hub-incharge');
+    const locationInput = document.getElementById('ap-location');
+    const submitBtn = document.getElementById('ap-submit-btn');
+
+    if (!submitBtn) return;
+
+    const isValid = (nameInput && nameInput.value.trim() !== '') &&
+                    (phoneInput && phoneInput.value.trim() !== '') &&
+                    (hubNameInput && hubNameInput.value.trim() !== '') &&
+                    (hubInchargeInput && hubInchargeInput.value.trim() !== '') &&
+                    (locationInput && locationInput.value.trim() !== '');
+
+    if (isValid) {
+        submitBtn.style.opacity = "1";
+        submitBtn.style.pointerEvents = "auto";
+    } else {
+        submitBtn.style.opacity = "0.5";
+        submitBtn.style.pointerEvents = "none";
+    }
+}
+
+
 // Ensure elements exist before adding listeners
 window.addEventListener('DOMContentLoaded', () => {
     // 1. Listen to District dropdown
@@ -235,6 +316,24 @@ window.addEventListener('DOMContentLoaded', () => {
     if (whatsappBtn) {
         whatsappBtn.addEventListener('click', handleWhatsAppClick);
     }
+
+    // 9. Advance Payment form listeners
+    const apNameInput = document.getElementById('ap-name');
+    const apPhoneInput = document.getElementById('ap-phone');
+    const apHubNameInput = document.getElementById('ap-hub-name');
+    const apHubInchargeInput = document.getElementById('ap-hub-incharge');
+    const apLocationInput = document.getElementById('ap-location');
+    const apSubmitBtn = document.getElementById('ap-submit-btn');
+
+    if (apNameInput) apNameInput.addEventListener('input', updateAdvancePaymentButton);
+    if (apPhoneInput) apPhoneInput.addEventListener('input', updateAdvancePaymentButton);
+    if (apHubNameInput) apHubNameInput.addEventListener('input', updateAdvancePaymentButton);
+    if (apHubInchargeInput) apHubInchargeInput.addEventListener('input', updateAdvancePaymentButton);
+    if (apLocationInput) apLocationInput.addEventListener('input', updateAdvancePaymentButton);
+    if (apSubmitBtn) apSubmitBtn.addEventListener('click', handleAdvancePaymentSubmit);
+
+    // Initial validation for advance payment form
+    updateAdvancePaymentButton();
     
     // Initial call to set button to disabled (0.5 opacity) on load
     updateWhatsAppLink();

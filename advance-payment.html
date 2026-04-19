@@ -23,10 +23,23 @@
         <span></span>
       </button>
       <div class="menu-dropdown" id="menu-dropdown" aria-hidden="true">
-        <a href="referafriend.html">Refer a Friend</a>
-        <a href="help.html">Help</a>
-        <a href="advance-payment.html">Advance Payment</a>
-        <a href="complaint.html">Complaint</a>
+        <a href="referafriend.html" class="menu-bonus-link menu-item-link">
+          <span class="menu-item-icon">🔖</span>
+          Refer a Friend
+          <span class="menu-bonus-value">1000/-</span>
+        </a>
+        <a href="help.html" class="menu-item-link">
+          <span class="menu-item-icon">💡</span>
+          Help
+        </a>
+        <a href="advance-payment.html" class="menu-item-link">
+          <span class="menu-item-icon">💰</span>
+          Advance Payment
+        </a>
+        <a href="complaint.html" class="menu-item-link">
+          <span class="menu-item-icon">⚠️</span>
+          Complaint
+        </a>
       </div>
     </nav>
     <h2>Advance Payment Request</h2>
@@ -34,12 +47,14 @@
 
     <div class="form-control-group">
       <label for="ap-name"><strong>Full Name</strong></label>
-      <input type="text" id="ap-name" name="ap-name" placeholder="Enter your full name" required>
+      <input type="text" id="ap-name" name="ap-name" placeholder="Enter your full name" maxlength="30" required>
+      <div id="ap-name-error" class="error-message" style="display: none;"></div>
     </div>
 
     <div class="form-control-group">
       <label for="ap-phone"><strong>Phone Number</strong></label>
-      <input type="tel" id="ap-phone" name="ap-phone" placeholder="Enter your phone number" required>
+      <input type="tel" id="ap-phone" name="ap-phone" placeholder="Enter your phone number" pattern="[0-9]{10}" maxlength="10" required>
+      <div id="ap-phone-error" class="error-message" style="display: none;"></div>
     </div>
 
     <div class="form-control-group">
@@ -54,7 +69,34 @@
 
     <div class="form-control-group">
       <label for="ap-location"><strong>Location</strong></label>
-      <input type="text" id="ap-location" name="ap-location" placeholder="Enter location" required>
+      <select id="ap-location" name="ap-location" required>
+        <option value="">---Select---</option>
+        <option value="alluri_sitharama_raju">Alluri Sitharama Raju</option>
+        <option value="anakapalli">Anakapalli</option>
+        <option value="ananthapuramu">Ananthapuramu</option>
+        <option value="annamayya">Annamayya</option>
+        <option value="bapatla">Bapatla</option>
+        <option value="chittoor">Chittoor</option>
+        <option value="dr_br_ambedkar_konaseema">Dr. B.R. Ambedkar Konaseema</option>
+        <option value="east_godavari">East Godavari</option>
+        <option value="eluru">Eluru</option>
+        <option value="guntur">Guntur</option>
+        <option value="kakinada">Kakinada</option>
+        <option value="krishna">Krishna</option>
+        <option value="kurnool">Kurnool</option>
+        <option value="nandyal">Nandyal</option>
+        <option value="ntr">NTR</option>
+        <option value="prakasam">Prakasam</option>
+        <option value="spsr_nellore">SPSR Nellore</option>
+        <option value="srikakulam">Srikakulam</option>
+        <option value="tirupati">Tirupati</option>
+        <option value="visakhapatnam">Visakhapatnam</option>
+        <option value="vizianagaram">Vizianagaram</option>
+        <option value="west_godavari">West Godavari</option>
+        <option value="ysr_kadapa">YSR Kadapa</option>
+        <option value="other">Other</option>
+      </select>
+      <input type="text" id="ap-other-location" name="ap-other-location" placeholder="Enter other location" style="display:none; margin-top: 10px;">
     </div>
 
     <div style="text-align: center; margin-top: 20px;">

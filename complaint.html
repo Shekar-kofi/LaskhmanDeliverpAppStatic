@@ -23,10 +23,23 @@
         <span></span>
       </button>
       <div class="menu-dropdown" id="menu-dropdown" aria-hidden="true">
-        <a href="referafriend.html">Refer a Friend</a>
-        <a href="help.html">Help</a>
-        <a href="advance-payment.html">Advance Payment</a>
-        <a href="complaint.html">Complaint</a>
+        <a href="referafriend.html" class="menu-bonus-link menu-item-link">
+          <span class="menu-item-icon">🔖</span>
+          Refer a Friend
+          <span class="menu-bonus-value">1000/-</span>
+        </a>
+        <a href="help.html" class="menu-item-link">
+          <span class="menu-item-icon">💡</span>
+          Help
+        </a>
+        <a href="advance-payment.html" class="menu-item-link">
+          <span class="menu-item-icon">💰</span>
+          Advance Payment
+        </a>
+        <a href="complaint.html" class="menu-item-link">
+          <span class="menu-item-icon">⚠️</span>
+          Complaint
+        </a>
       </div>
     </nav>
     <h2>Complaint</h2>
@@ -35,11 +48,13 @@
     <form id="complaint-form" class="complaint-form">
       <div class="form-control-group">
         <label for="cm-name">Name</label>
-        <input id="cm-name" type="text" placeholder="Enter your name" />
+        <input id="cm-name" type="text" placeholder="Enter your name" maxlength="30" />
+        <div id="cm-name-error" class="error-message" style="display: none;"></div>
       </div>
       <div class="form-control-group">
         <label for="cm-phone">Phone Number</label>
-        <input id="cm-phone" type="tel" placeholder="Enter phone number" />
+        <input id="cm-phone" type="tel" placeholder="Enter phone number" pattern="[0-9]{10}" maxlength="10" />
+        <div id="cm-phone-error" class="error-message" style="display: none;"></div>
       </div>
       <div class="form-control-group">
         <label for="cm-hub-name">Hub Name</label>

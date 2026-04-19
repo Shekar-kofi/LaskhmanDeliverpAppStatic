@@ -23,24 +23,39 @@
         <span></span>
       </button>
       <div class="menu-dropdown" id="menu-dropdown" aria-hidden="true">
-        <a href="referafriend.html">Refer a Friend</a>
-        <a href="help.html">Help</a>
-        <a href="advance-payment.html">Advance Payment</a>
-        <a href="complaint.html">Complaint</a>
+        <a href="referafriend.html" class="menu-bonus-link menu-item-link">
+          <span class="menu-item-icon">🔖</span>
+          Refer a Friend
+          <span class="menu-bonus-value">1000/-</span>
+        </a>
+        <a href="help.html" class="menu-item-link">
+          <span class="menu-item-icon">💡</span>
+          Help
+        </a>
+        <a href="advance-payment.html" class="menu-item-link">
+          <span class="menu-item-icon">💰</span>
+          Advance Payment
+        </a>
+        <a href="complaint.html" class="menu-item-link">
+          <span class="menu-item-icon">⚠️</span>
+          Complaint
+        </a>
       </div>
     </nav>
     <h2>Refer a Friend</h2>
-    <p>Share the opportunity with your friends who want delivery partner jobs.
-      If they join through you, you can earn rewards and support them throughout the process.</p>
-    <p>Use the menu icon to navigate between pages.</p>
+    <!-- <p>Share the opportunity with your friends who want delivery partner jobs.
+      If they join through you, you can earn rewards and support them throughout the process.</p> -->
+    <p><strong>Note:</strong> Referral bonus will be given only when the referral friend works at least for 26 days.</p>
     <form id="refer-friend-form" class="refer-friend-form">
       <div class="form-control-group">
         <label for="rf-name">Name</label>
-        <input id="rf-name" type="text" placeholder="Enter your name" />
+        <input id="rf-name" type="text" placeholder="Enter your name" maxlength="30" />
+        <div id="rf-name-error" class="error-message" style="display: none;"></div>
       </div>
       <div class="form-control-group">
         <label for="rf-phone">Phone Number</label>
-        <input id="rf-phone" type="tel" placeholder="Enter phone number" />
+        <input id="rf-phone" type="tel" placeholder="Enter phone number" pattern="[0-9]{10}" maxlength="10" />
+        <div id="rf-phone-error" class="error-message" style="display: none;"></div>
       </div>
       <div class="form-control-group">
         <label for="rf-hub-name">Hub Name</label>
@@ -52,7 +67,34 @@
       </div>
       <div class="form-control-group">
         <label for="rf-location">Location</label>
-        <input id="rf-location" type="text" placeholder="Enter location" />
+        <select id="rf-location" name="rf-location">
+          <option value="">---Select---</option>
+          <option value="alluri_sitharama_raju">Alluri Sitharama Raju</option>
+          <option value="anakapalli">Anakapalli</option>
+          <option value="ananthapuramu">Ananthapuramu</option>
+          <option value="annamayya">Annamayya</option>
+          <option value="bapatla">Bapatla</option>
+          <option value="chittoor">Chittoor</option>
+          <option value="dr_br_ambedkar_konaseema">Dr. B.R. Ambedkar Konaseema</option>
+          <option value="east_godavari">East Godavari</option>
+          <option value="eluru">Eluru</option>
+          <option value="guntur">Guntur</option>
+          <option value="kakinada">Kakinada</option>
+          <option value="krishna">Krishna</option>
+          <option value="kurnool">Kurnool</option>
+          <option value="nandyal">Nandyal</option>
+          <option value="ntr">NTR</option>
+          <option value="prakasam">Prakasam</option>
+          <option value="spsr_nellore">SPSR Nellore</option>
+          <option value="srikakulam">Srikakulam</option>
+          <option value="tirupati">Tirupati</option>
+          <option value="visakhapatnam">Visakhapatnam</option>
+          <option value="vizianagaram">Vizianagaram</option>
+          <option value="west_godavari">West Godavari</option>
+          <option value="ysr_kadapa">YSR Kadapa</option>
+          <option value="other">Other</option>
+        </select>
+        <input id="rf-other-location" type="text" placeholder="Enter other location" style="display:none; margin-top: 10px;" />
       </div>
       <button type="submit" class="whatsapp-apply-btn" id="rf-submit-btn" disabled>Submit Referral</button>
     </form>

@@ -26,6 +26,81 @@ function hideLoading() {
     }
 }
 
+// Real-time validation functions
+function validateName(inputId, errorId) {
+    const input = document.getElementById(inputId);
+    const errorDiv = document.getElementById(errorId);
+    
+    if (!input || !errorDiv) {
+        return;
+    }
+    
+    const value = input.value.trim();
+    const validNamePattern = /^[a-zA-Z\s.'-]+$/;
+    
+    if (value === "") {
+        errorDiv.textContent = "";
+        errorDiv.style.display = "none";
+    } else if (value.length > 30) {
+        errorDiv.textContent = "Name must be 30 characters or less";
+        errorDiv.style.display = "block";
+    } else if (!validNamePattern.test(value)) {
+        errorDiv.textContent = "Invalid name. Please use letters only.";
+        errorDiv.style.display = "block";
+    } else {
+        errorDiv.textContent = "";
+        errorDiv.style.display = "none";
+    }
+}
+
+function validatePhone(inputId, errorId) {
+    const input = document.getElementById(inputId);
+    const errorDiv = document.getElementById(errorId);
+    
+    if (!input || !errorDiv) {
+        return;
+    }
+    
+    const value = input.value.trim();
+    const digitsOnly = /^[0-9]*$/;
+    
+    if (value === "") {
+        errorDiv.textContent = "";
+        errorDiv.style.display = "none";
+    } else if (!digitsOnly.test(value)) {
+        errorDiv.textContent = "Invalid phone number. Only digits are allowed.";
+        errorDiv.style.display = "block";
+    } else if (value.length < 10) {
+        errorDiv.textContent = "Invalid phone number. Enter 10 digits.";
+        errorDiv.style.display = "block";
+    } else {
+        errorDiv.textContent = "";
+        errorDiv.style.display = "none";
+    }
+}
+
+function showOtherLocation(selectId, otherId) {
+    const select = document.getElementById(selectId);
+    const otherInput = document.getElementById(otherId);
+    if (!select || !otherInput) return;
+
+    otherInput.style.display = select.value === 'other' ? 'block' : 'none';
+    if (select.value !== 'other') {
+        otherInput.value = '';
+    }
+}
+
+function getSelectedLocationValue(selectId, otherId) {
+    const select = document.getElementById(selectId);
+    const otherInput = document.getElementById(otherId);
+    if (!select) return '';
+
+    if (select.value === 'other') {
+        return otherInput ? otherInput.value.trim() : '';
+    }
+    return select.value.trim();
+}
+
 function updateWhatsAppLink() {
     const districtSelect = document.getElementById("district");
     const otherdistrict = document.getElementById('other-district');
@@ -47,17 +122,19 @@ function updateWhatsAppLink() {
     const platformValue = selectedPlatformRadio ? selectedPlatformRadio.value : "";
     const otherPlatformValue = otherPlatform ? otherPlatform.value : "";
 
-    // NAME and PHONE
+    // NAME and PHONE with validation
     const nameValue = nameInput ? nameInput.value.trim() : "";
     const phoneValue = phoneInput ? phoneInput.value.trim() : "";
 
-    // VALIDATION: Remains the same logic, but uses the new platformValue
+    // VALIDATION: Enhanced with length and format checks
     const isInvalid = (districtValue === "" || 
                       (districtValue === 'other' && otherDistrictValue.trim() === "") || 
                       platformValue === "" ||
                       (platformValue === 'other' && otherPlatformValue.trim() === "") ||
                       nameValue === "" ||
-                      phoneValue === ""
+                      nameValue.length > 30 ||
+                      phoneValue === "" ||
+                      !/^[0-9]{10}$/.test(phoneValue)
                       );
 
     if (isInvalid) {
@@ -137,6 +214,16 @@ async function handleWhatsAppClick(event) {
         const nameValue = nameInput ? nameInput.value.trim() : "";
         const phoneValue = phoneInput ? phoneInput.value.trim() : "";
 
+        // Validate name and phone
+        if (nameValue === "" || nameValue.length > 30) {
+            alert('Please enter a valid name (maximum 30 characters)');
+            return;
+        }
+        if (phoneValue === "" || !/^[0-9]{10}$/.test(phoneValue)) {
+            alert('Please enter a valid 10-digit phone number');
+            return;
+        }
+
         // Get District Text
         const dText = (districtValue === 'other') ? otherDistrictValue : districtSelect.options[districtSelect.selectedIndex].text;
 
@@ -205,6 +292,7 @@ async function handleAdvancePaymentSubmit(event) {
         const hubNameInput = document.getElementById('ap-hub-name');
         const hubInchargeInput = document.getElementById('ap-hub-incharge');
         const locationInput = document.getElementById('ap-location');
+        const otherLocationInput = document.getElementById('ap-other-location');
         const submitBtn = document.getElementById('ap-submit-btn');
 
         if (!nameInput || !phoneInput || !hubNameInput || !hubInchargeInput || !locationInput) {
@@ -216,10 +304,20 @@ async function handleAdvancePaymentSubmit(event) {
         const phoneValue = phoneInput.value.trim();
         const hubNameValue = hubNameInput.value.trim();
         const hubInchargeValue = hubInchargeInput.value.trim();
-        const locationValue = locationInput.value.trim();
+        const locationValue = getSelectedLocationValue('ap-location', 'ap-other-location');
+
+        // Validate name and phone
+        if (nameValue === "" || nameValue.length > 30) {
+            alert('Please enter a valid name (maximum 30 characters)');
+            return;
+        }
+        if (phoneValue === "" || !/^[0-9]{10}$/.test(phoneValue)) {
+            alert('Please enter a valid 10-digit phone number');
+            return;
+        }
 
         // Validate all fields are filled
-        if (!nameValue || !phoneValue || !hubNameValue || !hubInchargeValue || !locationValue) {
+        if (!hubNameValue || !hubInchargeValue || !locationValue) {
             alert('Please fill all fields');
             return;
         }
@@ -248,6 +346,10 @@ async function handleAdvancePaymentSubmit(event) {
         hubNameInput.value = '';
         hubInchargeInput.value = '';
         locationInput.value = '';
+        if (otherLocationInput) {
+            otherLocationInput.value = '';
+            otherLocationInput.style.display = 'none';
+        }
     } catch (error) {
         console.error('Error:', error);
         alert('An error occurred. Please try again.');
@@ -267,6 +369,7 @@ async function handleReferFriendSubmit(event) {
         const hubNameInput = document.getElementById('rf-hub-name');
         const referralNameInput = document.getElementById('rf-referral-name');
         const locationInput = document.getElementById('rf-location');
+        const otherLocationInput = document.getElementById('rf-other-location');
 
         if (!nameInput || !phoneInput || !hubNameInput || !referralNameInput || !locationInput) {
             return;
@@ -276,9 +379,19 @@ async function handleReferFriendSubmit(event) {
         const phoneValue = phoneInput.value.trim();
         const hubNameValue = hubNameInput.value.trim();
         const referralNameValue = referralNameInput.value.trim();
-        const locationValue = locationInput.value.trim();
+        const locationValue = getSelectedLocationValue('rf-location', 'rf-other-location');
 
-        if (!nameValue || !phoneValue || !hubNameValue || !referralNameValue || !locationValue) {
+        // Validate name and phone
+        if (nameValue === "" || nameValue.length > 30) {
+            alert('Please enter a valid name (maximum 30 characters)');
+            return;
+        }
+        if (phoneValue === "" || !/^[0-9]{10}$/.test(phoneValue)) {
+            alert('Please enter a valid 10-digit phone number');
+            return;
+        }
+
+        if (!hubNameValue || !referralNameValue || !locationValue) {
             alert('Please fill all fields');
             return;
         }
@@ -303,6 +416,10 @@ async function handleReferFriendSubmit(event) {
         hubNameInput.value = '';
         referralNameInput.value = '';
         locationInput.value = '';
+        if (otherLocationInput) {
+            otherLocationInput.value = '';
+            otherLocationInput.style.display = 'none';
+        }
         updateReferFriendButton();
     } catch (error) {
         console.error('Error:', error);
@@ -332,7 +449,17 @@ async function handleComplaintSubmit(event) {
         const hubNameValue = hubNameInput.value.trim();
         const complaintValue = complaintInput.value.trim();
 
-        if (!nameValue || !phoneValue || !hubNameValue || !complaintValue) {
+        // Validate name and phone
+        if (nameValue === "" || nameValue.length > 30) {
+            alert('Please enter a valid name (maximum 30 characters)');
+            return;
+        }
+        if (phoneValue === "" || !/^[0-9]{10}$/.test(phoneValue)) {
+            alert('Please enter a valid 10-digit phone number');
+            return;
+        }
+
+        if (!hubNameValue || !complaintValue) {
             alert('Please fill all fields');
             return;
         }
@@ -373,8 +500,8 @@ function updateComplaintButton() {
 
     if (!submitBtn) return;
 
-    const isValid = (nameInput && nameInput.value.trim() !== '') &&
-                    (phoneInput && phoneInput.value.trim() !== '') &&
+    const isValid = (nameInput && nameInput.value.trim() !== '' && nameInput.value.trim().length <= 30) &&
+                    (phoneInput && phoneInput.value.trim() !== '' && /^[0-9]{10}$/.test(phoneInput.value.trim())) &&
                     (hubNameInput && hubNameInput.value.trim() !== '') &&
                     (complaintInput && complaintInput.value.trim() !== '');
 
@@ -400,11 +527,13 @@ function updateReferFriendButton() {
 
     if (!submitBtn) return;
 
-    const isValid = (nameInput && nameInput.value.trim() !== '') &&
-                    (phoneInput && phoneInput.value.trim() !== '') &&
+    const isValidName = nameInput && nameInput.value.trim() !== '' && nameInput.value.trim().length <= 30 && /^[a-zA-Z\s.'-]+$/.test(nameInput.value.trim());
+    const isValidPhone = phoneInput && phoneInput.value.trim() !== '' && /^[0-9]{10}$/.test(phoneInput.value.trim());
+    const isValidLocation = getSelectedLocationValue('rf-location', 'rf-other-location') !== '';
+    const isValid = isValidName && isValidPhone &&
                     (hubNameInput && hubNameInput.value.trim() !== '') &&
                     (referralNameInput && referralNameInput.value.trim() !== '') &&
-                    (locationInput && locationInput.value.trim() !== '');
+                    isValidLocation;
 
     if (isValid) {
         submitBtn.style.opacity = '1';
@@ -428,11 +557,13 @@ function updateAdvancePaymentButton() {
 
     if (!submitBtn) return;
 
-    const isValid = (nameInput && nameInput.value.trim() !== '') &&
-                    (phoneInput && phoneInput.value.trim() !== '') &&
+    const isValidName = nameInput && nameInput.value.trim() !== '' && nameInput.value.trim().length <= 30 && /^[a-zA-Z\s.'-]+$/.test(nameInput.value.trim());
+    const isValidPhone = phoneInput && phoneInput.value.trim() !== '' && /^[0-9]{10}$/.test(phoneInput.value.trim());
+    const isValidLocation = getSelectedLocationValue('ap-location', 'ap-other-location') !== '';
+    const isValid = isValidName && isValidPhone &&
                     (hubNameInput && hubNameInput.value.trim() !== '') &&
                     (hubInchargeInput && hubInchargeInput.value.trim() !== '') &&
-                    (locationInput && locationInput.value.trim() !== '');
+                    isValidLocation;
 
     if (isValid) {
         submitBtn.style.opacity = "1";
@@ -446,6 +577,8 @@ function updateAdvancePaymentButton() {
 
 // Ensure elements exist before adding listeners
 window.addEventListener('DOMContentLoaded', () => {
+    console.log('DOMContentLoaded event fired');
+    
     // 1. Listen to District dropdown
     const districtSelect = document.getElementById("district");
     if (districtSelect) {
@@ -474,12 +607,14 @@ window.addEventListener('DOMContentLoaded', () => {
     const nameInput = document.getElementById('name');
     if (nameInput) {
         nameInput.addEventListener('input', updateWhatsAppLink);
+        nameInput.addEventListener('input', () => validateName('name', 'name-error'));
     }
 
     // 6. Listen to Phone input
     const phoneInput = document.getElementById('phone');
     if (phoneInput) {
         phoneInput.addEventListener('input', updateWhatsAppLink);
+        phoneInput.addEventListener('input', () => validatePhone('phone', 'phone-error'));
     }
 
     // 7. Menu toggle behavior
@@ -515,11 +650,25 @@ window.addEventListener('DOMContentLoaded', () => {
     const apLocationInput = document.getElementById('ap-location');
     const apSubmitBtn = document.getElementById('ap-submit-btn');
 
-    if (apNameInput) apNameInput.addEventListener('input', updateAdvancePaymentButton);
-    if (apPhoneInput) apPhoneInput.addEventListener('input', updateAdvancePaymentButton);
+    if (apNameInput) {
+        apNameInput.addEventListener('input', updateAdvancePaymentButton);
+        apNameInput.addEventListener('input', () => validateName('ap-name', 'ap-name-error'));
+    }
+    if (apPhoneInput) {
+        apPhoneInput.addEventListener('input', updateAdvancePaymentButton);
+        apPhoneInput.addEventListener('input', () => validatePhone('ap-phone', 'ap-phone-error'));
+    }
     if (apHubNameInput) apHubNameInput.addEventListener('input', updateAdvancePaymentButton);
     if (apHubInchargeInput) apHubInchargeInput.addEventListener('input', updateAdvancePaymentButton);
-    if (apLocationInput) apLocationInput.addEventListener('input', updateAdvancePaymentButton);
+    if (apLocationInput) {
+        apLocationInput.addEventListener('change', updateAdvancePaymentButton);
+        apLocationInput.addEventListener('change', () => showOtherLocation('ap-location', 'ap-other-location'));
+        apLocationInput.addEventListener('change', updateAdvancePaymentButton);
+    }
+    const apOtherLocationInput = document.getElementById('ap-other-location');
+    if (apOtherLocationInput) {
+        apOtherLocationInput.addEventListener('input', updateAdvancePaymentButton);
+    }
     if (apSubmitBtn) apSubmitBtn.addEventListener('click', handleAdvancePaymentSubmit);
 
     const rfNameInput = document.getElementById('rf-name');
@@ -530,11 +679,25 @@ window.addEventListener('DOMContentLoaded', () => {
     const rfSubmitBtn = document.getElementById('rf-submit-btn');
     const referFriendForm = document.getElementById('refer-friend-form');
 
-    if (rfNameInput) rfNameInput.addEventListener('input', updateReferFriendButton);
-    if (rfPhoneInput) rfPhoneInput.addEventListener('input', updateReferFriendButton);
+    if (rfNameInput) {
+        rfNameInput.addEventListener('input', updateReferFriendButton);
+        rfNameInput.addEventListener('input', () => validateName('rf-name', 'rf-name-error'));
+    }
+    if (rfPhoneInput) {
+        rfPhoneInput.addEventListener('input', updateReferFriendButton);
+        rfPhoneInput.addEventListener('input', () => validatePhone('rf-phone', 'rf-phone-error'));
+    }
     if (rfHubNameInput) rfHubNameInput.addEventListener('input', updateReferFriendButton);
     if (rfReferralNameInput) rfReferralNameInput.addEventListener('input', updateReferFriendButton);
-    if (rfLocationInput) rfLocationInput.addEventListener('input', updateReferFriendButton);
+    if (rfLocationInput) {
+        rfLocationInput.addEventListener('change', updateReferFriendButton);
+        rfLocationInput.addEventListener('change', () => showOtherLocation('rf-location', 'rf-other-location'));
+        rfLocationInput.addEventListener('change', updateReferFriendButton);
+    }
+    const rfOtherLocationInput = document.getElementById('rf-other-location');
+    if (rfOtherLocationInput) {
+        rfOtherLocationInput.addEventListener('input', updateReferFriendButton);
+    }
     if (rfSubmitBtn) rfSubmitBtn.addEventListener('click', handleReferFriendSubmit);
     if (referFriendForm) referFriendForm.addEventListener('submit', handleReferFriendSubmit);
 
@@ -545,8 +708,14 @@ window.addEventListener('DOMContentLoaded', () => {
     const cmSubmitBtn = document.getElementById('cm-submit-btn');
     const complaintForm = document.getElementById('complaint-form');
 
-    if (cmNameInput) cmNameInput.addEventListener('input', updateComplaintButton);
-    if (cmPhoneInput) cmPhoneInput.addEventListener('input', updateComplaintButton);
+    if (cmNameInput) {
+        cmNameInput.addEventListener('input', updateComplaintButton);
+        cmNameInput.addEventListener('input', () => validateName('cm-name', 'cm-name-error'));
+    }
+    if (cmPhoneInput) {
+        cmPhoneInput.addEventListener('input', updateComplaintButton);
+        cmPhoneInput.addEventListener('input', () => validatePhone('cm-phone', 'cm-phone-error'));
+    }
     if (cmHubNameInput) cmHubNameInput.addEventListener('input', updateComplaintButton);
     if (cmComplaintInput) cmComplaintInput.addEventListener('input', updateComplaintButton);
     if (cmSubmitBtn) cmSubmitBtn.addEventListener('click', handleComplaintSubmit);

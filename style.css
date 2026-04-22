@@ -1368,9 +1368,10 @@
     #ap-submit-btn, 
     #rf-submit-btn, 
     #cm-submit-btn {
-        width: 100%;
-        padding: 12px 20px;
+        flex: 1;
+        padding: 12px 16px;
         font-size: 0.95em;
+        min-width: 0;
     }
 
     .whatsapp-apply-btn {
@@ -1379,26 +1380,24 @@
     }
 
     .whatsapp-icon-btn {
-        width: 50px;
-        height: 50px;
-        right: 15px;
-        font-size: 1.4em;
+        position: static !important;
+        width: 48px;
+        height: 48px;
+        font-size: 1.3em;
         box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        margin-left: auto;
+        flex-shrink: 0;
+        transform: none !important;
+        right: auto !important;
+        top: auto !important;
     }
-
-    .footer-container.main-card {
-        margin-top: 30px;
-        padding: 24px;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .footer-column {
-        text-align: center;
-        min-width: 100%;
+    
+    /* Button container should be flex on mobile to prevent overlap */
+    .main-card > div[style*="text-align"] {
+        display: flex !important;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
     }
 
     .footer-column p {

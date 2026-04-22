@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /assets/
+
+Sitemap: https://deliveryboyjobs.store/sitemap.xml
+
+# Rate limiting for bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /

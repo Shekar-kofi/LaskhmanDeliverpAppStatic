@@ -1,52 +1,172 @@
-    /* Import modern font from Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+    /* Import modern fonts from Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;600;700&display=swap');
 
-    .main-card {
-        background: rgba(255, 255, 255, 0.5); /* 90% opacity white */
-        padding: 40px;
-        border-radius: 15px;
-        margin: 50px auto;
-        width: 90%;
-        max-width: 600px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        position: relative;
-    }
-    
-    .footer-container {
-        background-color: rgba(248, 249, 250, 0.7); /* Slight transparency */
-        padding: 20px;
-        text-align: center;
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
 
+    /* Root color variables for easy customization */
+    :root {
+        --primary: #6366f1;
+        --primary-dark: #4f46e5;
+        --primary-light: #818cf8;
+        --secondary: #ec4899;
+        --accent: #f59e0b;
+        --success: #10b981;
+        --danger: #ef4444;
+        --dark: #1f2937;
+        --light: #f3f4f6;
+        --border: #e5e7eb;
+        --text-primary: #111827;
+        --text-secondary: #6b7280;
+    }
+
+    /* Professional Heading Styles with Modern Fonts */
+    h1 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 2.8em;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin-bottom: 16px;
+        letter-spacing: -1px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    h2 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 2.2em;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 16px;
+        letter-spacing: -0.5px;
+    }
+
+    h3 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.5em;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 12px;
+        letter-spacing: 0px;
+    }
+
+    p {
+        font-family: 'Inter', sans-serif;
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-size: 1em;
+    }
+
+    /* Modern gradient background */
     body {
-        background-image: url('assets/backgroundD3.png');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
         font-family: 'Inter', sans-serif;
         margin: 0;
         min-height: 100vh;
+        position: relative;
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* Overlay for better readability */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 23, 42, 0.25);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .main-card {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 45px;
+        border-radius: 20px;
+        margin: 60px auto;
+        width: 90%;
+        max-width: 650px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        position: relative;
+        z-index: 1;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .main-card:hover {
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+        transform: translateY(-2px);
+    }
+    
+    .footer-container {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 45px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        margin-top: 40px;
+        position: relative;
+        z-index: 1;
     }
 
     .header-logo {
         display: flex;
-        flex-direction: column; /* Stacks items vertically */
-        align-items: center;    /* Centers items horizontally */
-        margin: 20px 0;         /* Adds space above and below the header */
+        flex-direction: column;
+        align-items: center;
+        margin: 30px 0;
+        position: relative;
+        z-index: 1;
+        animation: slideDown 0.6s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
     
     .header-logo img {
-        width: 200px;
+        width: 180px;
         height: auto;
+        transition: transform 0.3s ease;
+        filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.15));
+    }
+
+    .header-logo img:hover {
+        transform: scale(1.05);
     }
     
     .company-name {
-        margin-top: 10px;       /* Gap between logo and text */
-        font-size: 0.9em;       /* Adjust size to look professional */
-        font-weight: bold;
-        color: #333;            /* Matches your clean aesthetic */
-        letter-spacing: 1px;    /* Optional: adds a modern feel */
+        margin-top: 15px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.1em;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
     }
 
@@ -55,53 +175,59 @@
         justify-content: flex-start;
         align-items: center;
         position: absolute;
-        top: 20px;
-        left: 20px;
-        z-index: 20;
+        top: 25px;
+        left: 25px;
+        z-index: 50;
         padding: 0;
     }
 
     .menu-toggle {
         border: none;
-        background: rgba(255, 255, 255, 0.95);
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-        transition: transform 0.2s ease, background-color 0.2s ease;
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+        transition: all 0.3s ease;
         padding: 0;
         position: relative;
     }
 
     .menu-toggle:hover,
     .menu-toggle:focus {
-        background: rgba(255, 255, 255, 1);
-        transform: translateY(-1px);
+        background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 12px 35px rgba(99, 102, 241, 0.45);
     }
 
     .menu-icon-img {
-        width: 24px;
-        height: 24px;
+        width: 26px;
+        height: 26px;
         object-fit: contain;
+        filter: brightness(0) invert(1);
     }
 
     .menu-dropdown {
         position: absolute;
-        top: 72px;
+        top: 65px;
         left: 0;
         background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         border-radius: 16px;
-        box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
         display: none;
         flex-direction: column;
-        gap: 10px;
-        padding: 16px;
-        min-width: 200px;
+        gap: 8px;
+        padding: 12px;
+        min-width: 220px;
         z-index: 10;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        animation: slideDown 0.3s ease-out;
     }
 
     .menu-dropdown.show {
@@ -109,26 +235,30 @@
     }
 
     .menu-dropdown a {
-        display: block;
-        color: #111;
-        background: rgba(0, 0, 0, 0.04);
-        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        color: var(--text-primary);
+        background: rgba(99, 102, 241, 0.08);
+        padding: 12px 16px;
         border-radius: 12px;
         text-decoration: none;
         font-weight: 600;
-        transition: background 0.2s ease;
+        font-size: 0.95em;
+        transition: all 0.2s ease;
+        gap: 10px;
     }
 
     .menu-dropdown a:hover,
     .menu-dropdown a:focus {
-        background: rgba(0, 0, 0, 0.08);
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(236, 72, 153, 0.1) 100%);
+        transform: translateX(4px);
     }
 
     .menu-bonus-link,
     .menu-item-link {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
         justify-content: flex-start;
     }
 
@@ -141,83 +271,119 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 30px;
-        height: 30px;
+        width: 36px;
+        height: 36px;
         border-radius: 10px;
-        font-size: 1rem;
+        font-size: 1.2rem;
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
     }
 
     .menu-item-icon {
-        background: rgba(0, 0, 0, 0.06);
-        color: #111;
+        color: var(--primary);
     }
 
     .menu-bonus-icon {
-        background: #ef4b4b;
-        color: #fff;
+        background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+        color: white;
     }
 
     .menu-bonus-value {
-        background: #ffecea;
-        color: #c31e1e;
-        padding: 4px 10px;
+        background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+        color: white;
+        padding: 6px 12px;
         border-radius: 999px;
         font-weight: 700;
-        font-size: 0.95rem;
+        font-size: 0.85rem;
         white-space: nowrap;
+        box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+    }
+
+    /* Center all headings */
+    .main-card h1,
+    .main-card h2 {
+        text-align: center;
     }
 
     .page-link {
         display: inline-block;
-        margin-top: 18px;
-        color: #111;
-        background: rgba(255,255,255,0.92);
+        margin-top: 20px;
+        color: white;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
         border-radius: 12px;
-        padding: 10px 16px;
+        padding: 12px 24px;
         text-decoration: none;
         font-weight: 600;
-        box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+        font-size: 0.95em;
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        transition: all 0.3s ease;
     }
 
     .page-link:hover,
     .page-link:focus {
-        background: rgba(255,255,255,1);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(99, 102, 241, 0.4);
     }
 
     .info-section {
-        background: rgba(255, 255, 255, 0.72);
-        margin: 20px auto;
-        padding: 24px;
-        border-radius: 18px;
-        max-width: 760px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        margin: 25px 0;
+        padding: 28px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
+
+    .info-section:hover {
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
     }
 
     .info-section h3 {
         margin-top: 0;
-        font-size: 1.2rem;
-        color: #111;
+        font-size: 1.3rem;
+        color: var(--text-primary);
     }
 
     .info-section p {
-        margin: 10px 0 0;
-        line-height: 1.6;
-        color: #333;
+        margin: 12px 0 0;
+        line-height: 1.7;
+        color: var(--text-secondary);
     }
 
-    h1 { text-align: center; color: #1a1a1a; margin-bottom: 30px; }
-    h2 { text-align: center; color: #1a1a1a; margin-top: 0; font-size: 1.4em; }
+    .info-section ul {
+        margin-top: 12px;
+        margin-left: 20px;
+    }
+
+    .info-section li {
+        margin: 8px 0;
+        color: var(--text-secondary);
+        line-height: 1.7;
+    }
     
     @media (max-width: 768px) {
         body { padding: 10px; }
+        
         .main-card {
             width: 95%;
-            padding: 30px;
+            padding: 24px;
         }
+
+        h1 {
+            font-size: 1.8em;
+        }
+
+        h2 {
+            font-size: 1.4em;
+        }
+
         .page-menu {
             top: 12px;
             left: 12px;
         }
+
         .menu-dropdown {
             top: 64px;
             right: auto;
@@ -225,23 +391,82 @@
             min-width: calc(100vw - 48px);
             max-width: 300px;
         }
-        .whatsapp-apply-btn {
-            width: 100%;
-            padding: 15px;
-        }
+
         .form-control-group {
             width: 100%;
         }
-                #district, #other-district, #platform, #name, #phone, #ap-name, #ap-phone, #ap-hub-name, #ap-hub-incharge, #ap-location {
-            width: 100%;
-            max-width: 100%;
+
+        #district, #other-district, #platform, #name, #phone, 
+        #ap-name, #ap-phone, #ap-hub-name, #ap-hub-incharge, #ap-location, 
+        #ap-other-location,
+        #rf-name, #rf-phone, #rf-hub-name, #rf-referral-name, #rf-location, #rf-other-location,
+        #cm-name, #cm-phone, #cm-hub-name, #cm-complaint,
+        #help-name, #help-phone, #help-message {
+            width: 100% !important;
+        }
+
+        .platform-options {
+            gap: 10px;
+        }
+
+        .card-content {
+            min-width: 80px;
         }
     }
 
     @media (max-width: 600px) {
-        body { padding: 10px; }
+        body { 
+            padding: 10px; 
+        }
+
         .main-card {
-            padding: 24px;
+            padding: 20px;
+            margin: 30px auto;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .form-control-group {
+            margin-bottom: 20px;
+        }
+
+        .apply-btn,
+        button[type="submit"], 
+        #ap-submit-btn, 
+        #rf-submit-btn, 
+        #cm-submit-btn {
+            width: 100%;
+            padding: 14px 24px;
+            font-size: 0.95em;
+        }
+
+        .whatsapp-icon-btn {
+            width: 50px;
+            height: 50px;
+            font-size: 1.5em;
+            right: 12px;
+        }
+
+        .platform-options {
+            gap: 8px;
+        }
+
+        .card-content {
+            height: 80px;
+            min-width: 70px;
+        }
+
+        .footer-content {
+            flex-direction: column;
+            gap: 15px;
         }
     }
 
@@ -252,44 +477,376 @@
         padding: 15px 40px;
         border-radius: 50px; /* This makes it pill-shaped */
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 700;
         font-size: 1.1em;
         text-align: center;
         border: none;
         cursor: pointer;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        transition: background-color 0.3s, transform 0.2s;
+        transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+        width: 100%;
+        max-width: 400px;
     }
     
     .whatsapp-apply-btn:hover {
         background-color: #128C7E; /* Darker green on hover */
         transform: scale(1.05); /* Slight pop effect */
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
     }
 
-    /* Container for the district selection group */
-.form-control-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Keeps everything centered */
-    margin-bottom: 30px;
-}
+    .whatsapp-apply-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: scale(1);
+    }
 
-/* Force both the select and input to have the exact same width and padding */
-#district, #other-district, #platform, #name, #phone, #ap-name, #ap-phone, #ap-hub-name, #ap-hub-incharge, #ap-location, #rf-name, #rf-phone, #rf-hub-name, #rf-referral-name, #rf-location, #cm-name, #cm-phone, #cm-hub-name, #cm-complaint {
-    width: 220px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-sizing: border-box; /* This is crucial for consistent alignment */
-    margin-top: 5px;
-}
+    /* Main Apply Button */
+    .apply-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+        padding: 16px 48px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.05em;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        transition: all 0.3s ease;
+        letter-spacing: 0.5px;
+    }
+    
+    .apply-btn:hover {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .apply-btn:active {
+        transform: translateY(0);
+    }
+
+    .apply-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* Universal button styling for all submit buttons */
+    button[type="submit"], #ap-submit-btn, #rf-submit-btn, #cm-submit-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+        padding: 16px 48px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.05em;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        transition: all 0.3s ease;
+        letter-spacing: 0.5px;
+    }
+
+    /* Main Apply Button - Modern Gradient */
+    .apply-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        padding: 16px 48px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 1.05em;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+        transition: all 0.3s ease;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .apply-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .apply-btn:hover {
+        background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+        transform: translateY(-4px);
+        box-shadow: 0 15px 40px rgba(99, 102, 241, 0.45);
+    }
+
+    .apply-btn:hover::before {
+        left: 100%;
+    }
+
+    .apply-btn:active {
+        transform: translateY(-2px);
+    }
+
+    .apply-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* Universal button styling for all submit buttons */
+    button[type="submit"], #ap-submit-btn, #rf-submit-btn, #cm-submit-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        padding: 16px 48px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 1.05em;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+        transition: all 0.3s ease;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+        width: auto;
+        max-width: none;
+    }
+
+    button[type="submit"]::before, #ap-submit-btn::before, #rf-submit-btn::before, #cm-submit-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    button[type="submit"]:hover, #ap-submit-btn:hover, #rf-submit-btn:hover, #cm-submit-btn:hover {
+        background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+        transform: translateY(-4px);
+        box-shadow: 0 15px 40px rgba(99, 102, 241, 0.45);
+    }
+
+    button[type="submit"]:hover::before, #ap-submit-btn:hover::before, #rf-submit-btn:hover::before, #cm-submit-btn:hover::before {
+        left: 100%;
+    }
+
+    button[type="submit"]:active, #ap-submit-btn:active, #rf-submit-btn:active, #cm-submit-btn:active {
+        transform: translateY(-2px);
+    }
+
+    button[type="submit"]:disabled, #ap-submit-btn:disabled, #rf-submit-btn:disabled, #cm-submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* WhatsApp Apply Button - Green Gradient */
+    .whatsapp-apply-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+        color: white;
+        padding: 16px 48px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 1.05em;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
+        transition: all 0.3s ease;
+        width: 100%;
+        max-width: 400px;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .whatsapp-apply-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+    
+    .whatsapp-apply-btn:hover {
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        transform: translateY(-4px);
+        box-shadow: 0 15px 40px rgba(16, 185, 129, 0.45);
+    }
+
+    .whatsapp-apply-btn:hover::before {
+        left: 100%;
+    }
+
+    .whatsapp-apply-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* WhatsApp Icon Button - Circular */
+    .whatsapp-icon-btn {
+        position: absolute;
+        right: 25px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 65px;
+        height: 65px;
+        background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        font-size: 1.8em;
+        cursor: pointer;
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
+        transition: all 0.3s ease;
+        z-index: 15;
+    }
+    
+    .whatsapp-icon-btn:hover {
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        transform: translateY(-50%) scale(1.15);
+        box-shadow: 0 15px 40px rgba(16, 185, 129, 0.45);
+    }
+
+    .whatsapp-icon-btn:active {
+        transform: translateY(-50%) scale(1.08);
+    }
+
+    /* Container for the form control group */
+    .form-control-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 24px;
+        width: 100%;
+    }
+
+    .form-control-group label {
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.95em;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 10px;
+        display: block;
+        letter-spacing: 0.3px;
+    }
+
+    /* Modern input field styling */
+    #district, #other-district, #platform, #name, #phone, 
+    #ap-name, #ap-phone, #ap-hub-name, #ap-hub-incharge, #ap-location, 
+    #ap-other-location,
+    #rf-name, #rf-phone, #rf-hub-name, #rf-referral-name, #rf-location, #rf-other-location,
+    #cm-name, #cm-phone, #cm-hub-name, #cm-complaint,
+    #help-name, #help-phone, #help-message {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        font-size: 1em;
+        font-family: 'Inter', sans-serif;
+        background-color: #f9fafb;
+        color: var(--text-primary);
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+        margin-top: 8px;
+    }
+
+    /* Focus state - vibrant blue border with glow */
+    #district:focus, #other-district:focus, #platform:focus, #name:focus, #phone:focus,
+    #ap-name:focus, #ap-phone:focus, #ap-hub-name:focus, #ap-hub-incharge:focus, #ap-location:focus,
+    #ap-other-location:focus,
+    #rf-name:focus, #rf-phone:focus, #rf-hub-name:focus, #rf-referral-name:focus, #rf-location:focus, #rf-other-location:focus,
+    #cm-name:focus, #cm-phone:focus, #cm-hub-name:focus, #cm-complaint:focus,
+    #help-name:focus, #help-phone:focus, #help-message:focus {
+        outline: none;
+        border-color: var(--primary);
+        background-color: #ffffff;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    }
+
+    /* Error state - red border */
+    .error-message {
+        color: var(--danger);
+        font-size: 0.85em;
+        margin-top: 6px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 500;
+    }
+
+    /* Select dropdown styling */
+    select {
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 20px;
+        padding-right: 40px !important;
+        cursor: pointer;
+    }
+
+    select::-ms-expand {
+        display: none;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        font-size: 1em;
+        font-family: 'Inter', sans-serif;
+        background-color: #f9fafb;
+        color: var(--text-primary);
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+        resize: vertical;
+        min-height: 120px;
+        margin-top: 8px;
+    }
+
+    textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        background-color: #ffffff;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    }
 
 
 /* Ensure the footer inherits the card look */
 .footer-container.main-card {
     margin-top: 50px;
-    padding: 30px;
-    display: block; /* Ensures it acts like a card */
+    padding: 40px;
+    display: block;
 }
 
 /* Use Flexbox to align contact/address side-by-side */
@@ -297,23 +854,51 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    gap: 20px;
+    gap: 30px;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 250px;
+    text-align: left;
+}
+
+.footer-column p {
+    margin: 8px 0;
+    color: var(--text-secondary);
+}
+
+.footer-link {
+    display: inline-block;
+    margin: 8px 12px 8px 0;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.footer-link:hover {
+    color: var(--primary-dark);
+    transform: translateX(2px);
 }
 
 .footer-heading {
-    color: #d63384; 
-    font-size: 1.1em; 
-    border-left: 4px solid #d63384; 
-    padding-left: 10px;
+    color: var(--secondary);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 700;
+    border-left: 4px solid var(--secondary);
+    padding-left: 12px;
+    margin-bottom: 16px;
 }
-
 
 .platform-options {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 10px;
+    gap: 14px;
+    justify-content: flex-start;
+    margin-top: 12px;
+    width: 100%;
 }
 
 /* Hide the actual radio button circles */
@@ -322,46 +907,76 @@
 }
 
 /* The card now acts as the primary interactive element */
+.option-card {
+    position: relative;
+    cursor: pointer;
+    flex: 1;
+    min-width: 100px;
+    max-width: 120px;
+}
+
 .card-content {
-    width: 120px;
-    height: 80px;
+    width: 100%;
+    height: 110px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.7); /* Matching your glass effect */
-    border: 2px solid transparent;
-    border-radius: 12px;
-    cursor: pointer;
+    border: 2.5px solid var(--border);
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
     transition: all 0.3s ease;
-    padding: 10px;
-    backdrop-filter: blur(5px);
+    padding: 12px;
+    box-sizing: border-box;
+    position: relative;
 }
 
-/* Hover effect for better UX */
-.card-content:hover {
-    background: rgba(255, 255, 255, 0.9);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* When the HIDDEN radio is checked, style the card content */
-.option-card input[type="radio"]:checked + .card-content {
-    border-color: #d63384; /* Your pink/brand color */
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(214, 51, 132, 0.3);
-    transform: scale(1.05); /* Slight pop to show selection */
+.card-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0) 0%, rgba(236, 72, 153, 0) 100%);
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .card-content img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain; /* Prevents logos from stretching */
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
+    z-index: 2;
 }
 
-/* Style for the 'Other' text to match logo height */
 .card-content span {
-    font-weight: bold;
-    color: #555;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: center;
+    font-size: 0.9em;
+    z-index: 2;
+}
+
+/* When radio is checked, style the card */
+.option-card input[type="radio"]:checked + .card-content {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+    transform: scale(1.08);
+}
+
+.option-card input[type="radio"]:checked + .card-content img {
+    filter: brightness(0) invert(1);
+}
+
+.option-card input[type="radio"]:checked + .card-content span {
+    color: white;
+}
+
+/* Hover state */
+.card-content:hover {
+    border-color: var(--primary-light);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(236, 72, 153, 0.05) 100%);
+    transform: translateY(-2px);
 }
 
 /* Loading Spinner Styles */
@@ -372,7 +987,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     z-index: 9999;
     justify-content: center;
     align-items: center;
@@ -447,22 +1064,290 @@
 .loading-text {
     position: relative;
     color: #fff;
-    font-size: 1.1em;
+    font-size: 1.2em;
     font-weight: 600;
     letter-spacing: 0.5px;
+    font-family: 'Poppins', sans-serif;
 }
 
 /* Error message styling */
 .error-message {
-    color: #e74c3c;
+    color: var(--danger);
     font-size: 0.85em;
-    margin-top: 5px;
+    margin-top: 6px;
     font-weight: 500;
     text-align: left;
-    width: 220px;
-    background-color: rgba(231, 76, 60, 0.1);
-    padding: 3px 5px;
-    border-radius: 3px;
-    border-left: 3px solid #e74c3c;
+    background-color: rgba(239, 68, 68, 0.08);
+    padding: 6px 10px;
+    border-radius: 6px;
+    border-left: 3px solid var(--danger);
+}
+
+/* Responsive Design - Tablet */
+@media (max-width: 768px) {
+    body { 
+        padding: 0;
+    }
+    
+    .main-card {
+        width: 95%;
+        padding: 35px;
+        margin: 40px auto;
+    }
+
+    .header-logo img {
+        width: 150px;
+    }
+
+    .company-name {
+        font-size: 0.9em;
+    }
+
+    h1 {
+        font-size: 2.2em;
+    }
+
+    h2 {
+        font-size: 1.8em;
+    }
+
+    h3 {
+        font-size: 1.2em;
+    }
+
+    .page-menu {
+        top: 15px;
+        left: 15px;
+    }
+
+    .menu-toggle {
+        width: 45px;
+        height: 45px;
+    }
+
+    .menu-dropdown {
+        top: 60px;
+        left: 15px;
+        min-width: 280px;
+    }
+
+    .form-control-group {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    #district, #other-district, #platform, #name, #phone, 
+    #ap-name, #ap-phone, #ap-hub-name, #ap-hub-incharge, #ap-location, 
+    #ap-other-location,
+    #rf-name, #rf-phone, #rf-hub-name, #rf-referral-name, #rf-location, #rf-other-location,
+    #cm-name, #cm-phone, #cm-hub-name, #cm-complaint,
+    #help-name, #help-phone, #help-message {
+        width: 100% !important;
+    }
+
+    .platform-options {
+        gap: 12px;
+    }
+
+    .card-content {
+        min-width: 90px;
+        height: 100px;
+    }
+
+    .apply-btn,
+    button[type="submit"], 
+    #ap-submit-btn, 
+    #rf-submit-btn, 
+    #cm-submit-btn {
+        width: 100%;
+        padding: 14px 24px;
+        font-size: 0.95em;
+    }
+
+    .whatsapp-icon-btn {
+        width: 55px;
+        height: 55px;
+        right: 20px;
+        font-size: 1.6em;
+    }
+
+    .footer-content {
+        gap: 20px;
+    }
+}
+
+/* Responsive Design - Mobile */
+@media (max-width: 600px) {
+    body { 
+        padding: 0;
+    }
+
+    .main-card {
+        width: 95%;
+        padding: 24px;
+        margin: 25px auto;
+        border-radius: 18px;
+    }
+
+    .header-logo {
+        margin: 20px 0;
+    }
+
+    .header-logo img {
+        width: 130px;
+    }
+
+    .company-name {
+        font-size: 0.8em;
+        margin-top: 12px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 12px;
+    }
+
+    h2 {
+        font-size: 1.4em;
+        margin-bottom: 12px;
+    }
+
+    h3 {
+        font-size: 1.1em;
+    }
+
+    p {
+        font-size: 0.95em;
+    }
+
+    .page-menu {
+        top: 12px;
+        left: 12px;
+    }
+
+    .menu-toggle {
+        width: 44px;
+        height: 44px;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+    }
+
+    .menu-icon-img {
+        width: 22px;
+        height: 22px;
+    }
+
+    .menu-dropdown {
+        top: 56px;
+        left: 12px;
+        min-width: calc(100vw - 40px);
+        max-width: 280px;
+        padding: 10px;
+        gap: 6px;
+    }
+
+    .menu-dropdown a {
+        padding: 10px 12px;
+        font-size: 0.9em;
+    }
+
+    .form-control-group {
+        margin-bottom: 18px;
+    }
+
+    .form-control-group label {
+        font-size: 0.9em;
+    }
+
+    #district, #other-district, #platform, #name, #phone, 
+    #ap-name, #ap-phone, #ap-hub-name, #ap-hub-incharge, #ap-location, 
+    #ap-other-location,
+    #rf-name, #rf-phone, #rf-hub-name, #rf-referral-name, #rf-location, #rf-other-location,
+    #cm-name, #cm-phone, #cm-hub-name, #cm-complaint,
+    #help-name, #help-phone, #help-message {
+        width: 100% !important;
+        padding: 12px 14px;
+        font-size: 16px;
+    }
+
+    .platform-options {
+        gap: 10px;
+    }
+
+    .option-card {
+        max-width: 100%;
+    }
+
+    .card-content {
+        height: 90px;
+        min-width: 75px;
+        border-radius: 12px;
+    }
+
+    .card-content img {
+        max-width: 80%;
+        max-height: 80%;
+    }
+
+    textarea {
+        min-height: 100px;
+        padding: 12px 14px;
+        font-size: 16px;
+    }
+
+    .apply-btn,
+    button[type="submit"], 
+    #ap-submit-btn, 
+    #rf-submit-btn, 
+    #cm-submit-btn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 0.95em;
+    }
+
+    .whatsapp-apply-btn {
+        max-width: 100%;
+        padding: 14px 24px;
+    }
+
+    .whatsapp-icon-btn {
+        width: 50px;
+        height: 50px;
+        right: 15px;
+        font-size: 1.4em;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+    }
+
+    .footer-container.main-card {
+        margin-top: 30px;
+        padding: 24px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .footer-column {
+        text-align: center;
+        min-width: 100%;
+    }
+
+    .footer-column p {
+        font-size: 0.9em;
+    }
+
+    .info-section {
+        padding: 20px;
+        margin: 20px 0;
+    }
+
+    .info-section h3 {
+        font-size: 1.1em;
+    }
+
+    .page-link {
+        font-size: 0.9em;
+        padding: 10px 18px;
+    }
 }
 

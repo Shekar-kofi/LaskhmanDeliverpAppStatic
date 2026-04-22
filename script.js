@@ -1,13 +1,13 @@
 function checkDistrict(val) {
     const otherInput = document.getElementById('other-district');
     otherInput.style.display = (val === 'other') ? 'block' : 'none';
-    updateWhatsAppLink();
+    updateApplyNowButton();
 }
 
 function checkPlatform(val) {
     const otherInput = document.getElementById('other-platform');
     otherInput.style.display = (val === 'other') ? 'block' : 'none';
-    updateWhatsAppLink();
+    updateApplyNowButton();
 }
 
 // Helper function to show loading overlay
@@ -101,67 +101,44 @@ function getSelectedLocationValue(selectId, otherId) {
     return select.value.trim();
 }
 
-function updateWhatsAppLink() {
+function updateApplyNowButton() {
     const districtSelect = document.getElementById("district");
     const otherdistrict = document.getElementById('other-district');
     const otherPlatform = document.getElementById('other-platform');
     const nameInput = document.getElementById('name');
     const phoneInput = document.getElementById('phone');
-    const whatsappBtn = document.getElementById("whatsapp-btn");
+    const applyBtn = document.getElementById("apply-btn");
 
-    if (!whatsappBtn) {
+    if (!applyBtn) {
         return;
     }
 
-    // DISTRICT: Still uses the dropdown logic
-    const districtValue = districtSelect ? districtSelect.value : "";
+    // DISTRICT: If no dropdown exists, validation passes for district
+    const districtValue = districtSelect ? districtSelect.value : "default";
     const otherDistrictValue = otherdistrict ? otherdistrict.value : "";
+    const isDistrictValid = !districtSelect || districtValue !== "" && !(districtValue === 'other' && otherDistrictValue.trim() === "");
 
     // PLATFORM: Change this part to find the selected radio button
     const selectedPlatformRadio = document.querySelector('input[name="platform"]:checked');
     const platformValue = selectedPlatformRadio ? selectedPlatformRadio.value : "";
     const otherPlatformValue = otherPlatform ? otherPlatform.value : "";
+    const isPlatformValid = platformValue !== "" && !(platformValue === 'other' && otherPlatformValue.trim() === "");
 
     // NAME and PHONE with validation
     const nameValue = nameInput ? nameInput.value.trim() : "";
     const phoneValue = phoneInput ? phoneInput.value.trim() : "";
+    const isNameValid = nameValue !== "" && nameValue.length <= 30 && /^[a-zA-Z\s.'-]+$/.test(nameValue);
+    const isPhoneValid = phoneValue !== "" && /^[0-9]{10}$/.test(phoneValue);
 
-    // VALIDATION: Enhanced with length and format checks
-    const isInvalid = (districtValue === "" || 
-                      (districtValue === 'other' && otherDistrictValue.trim() === "") || 
-                      platformValue === "" ||
-                      (platformValue === 'other' && otherPlatformValue.trim() === "") ||
-                      nameValue === "" ||
-                      nameValue.length > 30 ||
-                      phoneValue === "" ||
-                      !/^[0-9]{10}$/.test(phoneValue)
-                      );
+    // VALIDATION: Check all conditions
+    const isInvalid = !isDistrictValid || !isPlatformValid || !isNameValid || !isPhoneValid;
 
     if (isInvalid) {
-        whatsappBtn.style.opacity = "0.5";
-        whatsappBtn.style.pointerEvents = "none";
-        whatsappBtn.removeAttribute("href");
+        applyBtn.style.opacity = "0.5";
+        applyBtn.style.pointerEvents = "none";
     } else {
-        whatsappBtn.style.opacity = "1";
-        whatsappBtn.style.pointerEvents = "auto";
-        
-        // Get District Text
-        const dText = (districtValue === 'other') ? otherDistrictValue : districtSelect.options[districtSelect.selectedIndex].text;
-        
-        // PLATFORM TEXT: Logic change here to get text from the radio label if not 'other'
-        let pText = "";
-        if (platformValue === "other") {
-          pText = otherPlatformValue;
-        } else if (selectedPlatformRadio) {
-          // Look for the image alt text first, otherwise use the div text
-          const img = selectedPlatformRadio.parentElement.querySelector("img");
-          pText = img
-            ? img.alt
-            : selectedPlatformRadio.parentElement.innerText.trim();
-        }
-
-        const message = `Hi, I am ${nameValue} (${phoneValue}). I am interested in a delivery job in ${dText} for ${pText} platform.`;
-        whatsappBtn.href = `https://wa.me/919000210321?text=${encodeURIComponent(message)}`;
+        applyBtn.style.opacity = "1";
+        applyBtn.style.pointerEvents = "auto";
     }
 }
 
@@ -193,8 +170,8 @@ async function submitToGoogleSheets(formData) {
     }
 }
 
-// Function to handle WhatsApp button click
-async function handleWhatsAppClick(event) {
+// Function to handle Apply Now button click (submits to Google Sheets)
+async function handleApplyNowClick(event) {
     event.preventDefault();
     showLoading();
 
@@ -217,15 +194,30 @@ async function handleWhatsAppClick(event) {
         // Validate name and phone
         if (nameValue === "" || nameValue.length > 30) {
             alert('Please enter a valid name (maximum 30 characters)');
+            hideLoading();
             return;
         }
         if (phoneValue === "" || !/^[0-9]{10}$/.test(phoneValue)) {
             alert('Please enter a valid 10-digit phone number');
+            hideLoading();
             return;
         }
 
-        // Get District Text
-        const dText = (districtValue === 'other') ? otherDistrictValue : districtSelect.options[districtSelect.selectedIndex].text;
+        // Get District Text - use page title if no district select element
+        let dText;
+        if (districtSelect) {
+            dText = (districtValue === 'other') ? otherDistrictValue : districtSelect.options[districtSelect.selectedIndex].text;
+        } else {
+            // For pages like delivery-jobs-visakhapatnam.html, extract district from page title
+            dText = "Visakhapatnam"; // Default, can be enhanced to parse from page title
+        }
+
+        // Validate platform selection
+        if (platformValue === "") {
+            alert('Please select a delivery platform');
+            hideLoading();
+            return;
+        }
 
         // Get Platform Text
         let pText = "";
@@ -247,12 +239,11 @@ async function handleWhatsAppClick(event) {
             timestamp: new Date().toISOString()
         };
 
-        // Submit to Google Sheets first
+        // Submit to Google Sheets only (no WhatsApp redirect)
         await submitToGoogleSheets(formData);
 
-        // Then open WhatsApp
-        const whatsappURL = `https://wa.me/919000210321?text=${encodeURIComponent(message)}`;
-        window.open(whatsappURL, '_blank');
+        // Show success message
+        alert('Your application has been submitted successfully!');
 
         // Clear all form fields
         if (nameInput) nameInput.value = '';
@@ -271,7 +262,7 @@ async function handleWhatsAppClick(event) {
         if (otherPlatform) otherPlatform.style.display = 'none';
 
         // Reset button state
-        updateWhatsAppLink();
+        updateApplyNowButton();
     } catch (error) {
         console.error('Error:', error);
         alert('An error occurred. Please try again.');
@@ -280,6 +271,14 @@ async function handleWhatsAppClick(event) {
     }
 }
 
+
+// Function to handle quick WhatsApp icon click (just sends "I'm interested" message)
+function handleQuickWhatsAppClick(event) {
+    event.preventDefault();
+    const message = "Hi, I am interested in the job.";
+    const whatsappURL = `https://wa.me/919000210321?text=${encodeURIComponent(message)}`;
+    window.open(whatsappURL, '_blank');
+}
 
 // Function to handle Advance Payment form submission
 async function handleAdvancePaymentSubmit(event) {
@@ -582,38 +581,38 @@ window.addEventListener('DOMContentLoaded', () => {
     // 1. Listen to District dropdown
     const districtSelect = document.getElementById("district");
     if (districtSelect) {
-        districtSelect.addEventListener("change", updateWhatsAppLink);
+        districtSelect.addEventListener("change", updateApplyNowButton);
     }
     
     // 2. Listen to District "Other" text input
     const otherDistrictInput = document.getElementById('other-district');
     if (otherDistrictInput) {
-        otherDistrictInput.addEventListener('input', updateWhatsAppLink);
+        otherDistrictInput.addEventListener('input', updateApplyNowButton);
     }
 
     // 3. Listen to Platform "Other" text input
     const otherPlatformInput = document.getElementById('other-platform');
     if (otherPlatformInput) {
-        otherPlatformInput.addEventListener('input', updateWhatsAppLink);
+        otherPlatformInput.addEventListener('input', updateApplyNowButton);
     }
 
     // 4. NEW: Listen to ALL Radio Buttons for Platform
     const platformRadios = document.querySelectorAll('input[name="platform"]');
     platformRadios.forEach(radio => {
-        radio.addEventListener("change", updateWhatsAppLink);
+        radio.addEventListener("change", updateApplyNowButton);
     });
 
     // 5. Listen to Name input
     const nameInput = document.getElementById('name');
     if (nameInput) {
-        nameInput.addEventListener('input', updateWhatsAppLink);
+        nameInput.addEventListener('input', updateApplyNowButton);
         nameInput.addEventListener('input', () => validateName('name', 'name-error'));
     }
 
     // 6. Listen to Phone input
     const phoneInput = document.getElementById('phone');
     if (phoneInput) {
-        phoneInput.addEventListener('input', updateWhatsAppLink);
+        phoneInput.addEventListener('input', updateApplyNowButton);
         phoneInput.addEventListener('input', () => validatePhone('phone', 'phone-error'));
     }
 
@@ -636,10 +635,16 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 8. WhatsApp button click handler
-    const whatsappBtn = document.getElementById("whatsapp-btn");
-    if (whatsappBtn) {
-        whatsappBtn.addEventListener('click', handleWhatsAppClick);
+    // 8. Apply Now button click handler
+    const applyBtn = document.getElementById("apply-btn");
+    if (applyBtn) {
+        applyBtn.addEventListener('click', handleApplyNowClick);
+    }
+
+    // 9. WhatsApp icon button click handler (quick message)
+    const whatsappIconBtn = document.getElementById("whatsapp-icon-btn");
+    if (whatsappIconBtn) {
+        whatsappIconBtn.addEventListener('click', handleQuickWhatsAppClick);
     }
 
     // 9. Advance Payment form listeners
@@ -727,5 +732,5 @@ window.addEventListener('DOMContentLoaded', () => {
     updateComplaintButton();
     
     // Initial call to set button to disabled (0.5 opacity) on load
-    updateWhatsAppLink();
+    updateApplyNowButton();
 });
